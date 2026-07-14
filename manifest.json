@@ -1,19 +1,19 @@
 {
-  "name": "Punto de Venta EMI",
-  "short_name": "POS EMI",
-  "start_url": "./index.html",
+  "name": "POS RECH Desarrollo",
+  "short_name": "POS RECH",
+  "start_url": "/posRECH/",
+  "scope": "/posRECH/",
   "display": "standalone",
   "background_color": "#fff8e7",
   "theme_color": "#064e2f",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "logo-emi.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "logo-emi.png",
       "sizes": "512x512",
       "type": "image/png"
     }
