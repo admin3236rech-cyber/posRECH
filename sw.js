@@ -1,4 +1,4 @@
-const CACHE_NAME = "emi-pos-v2";
+const CACHE_NAME = "RECH-POS-dev";
 
 const ARCHIVOS_APP = [
   "./",
