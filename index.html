@@ -1,0 +1,5239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<script src="https://unpkg.com/html5-qrcode"></script>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punto de Venta</title>
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#064e2f">
+
+  <style>
+    body {
+  font-family: Arial;
+  background:#fff8e7;
+  margin:0;
+  padding:14px;
+}
+
+.logo-pos {
+  text-align:center;
+  background:#064e2f;
+  padding:14px;
+  border-radius:18px;
+  margin-bottom:14px;
+  color:white;
+}
+
+.logo-pos img {
+  max-width:180px;
+  width:70%;
+}
+
+.usuario-pos {
+  font-size:14px;
+  margin-top:6px;
+  color:#fff3d1;
+}
+.barra-usuario {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:8px;
+}
+
+.btn-salir-mini {
+  background:rgba(255,255,255,.14);
+  color:white;
+  border:1px solid rgba(255,255,255,.35);
+  padding:6px 10px;
+  font-size:13px;
+  border-radius:999px;
+  margin:0;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.btn-salir-mini:hover {
+  background:rgba(255,255,255,.24);
+}
+
+button {
+  padding:12px;
+  font-size:16px;
+  border:none;
+  border-radius:12px;
+  background:#0b8043;
+  color:white;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+.btn-cargar {
+  width:100%;
+  margin-bottom:12px;
+  background:#0b8043;
+}
+
+.btn-eliminar {
+  background:#d93025;
+}
+
+.btn-cobrar {
+  background:#064e2f;
+  width:100%;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.item-carrito {
+  background:white;
+  padding:8px 10px;
+  margin-bottom:6px;
+  border-radius:10px;
+  box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+
+.item-linea {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+
+.item-nombre {
+  font-size:15px;
+  font-weight:bold;
+}
+
+.item-info {
+  font-size:14px;
+  color:#555;
+}
+
+.item-importe {
+  font-size:16px;
+  color:#0b8043;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.item-botones button {
+  padding:6px 10px;
+  font-size:14px;
+  margin-top:4px;
+}
+
+#total {
+  background:#f97316;
+  color:white;
+  padding:16px;
+  border-radius:14px;
+  font-size:26px;
+  text-align:center;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+/* =========================================
+   LOGIN
+========================================= */
+
+.login-pos {
+  max-width:420px;
+  margin:40px auto 0;
+  text-align:center;
+}
+
+.login-logo {
+  width:150px;
+  height:150px;
+  margin:0 auto 16px;
+  background:#064e2f;
+  border-radius:28px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 10px 30px rgba(6,78,47,.22);
+}
+
+.login-logo img {
+  max-width:120px;
+  max-height:120px;
+}
+
+.login-pos h1 {
+  margin:0;
+  color:#064e2f;
+  font-size:30px;
+}
+
+.login-subtitulo {
+  color:#6b7280;
+  font-size:16px;
+  margin:6px 0 24px;
+}
+
+
+/* =========================================
+   ENCABEZADO COMPACTO
+========================================= */
+
+.encabezado-pos {
+  background:#064e2f;
+  color:white;
+  padding:12px 14px;
+  border-radius:16px;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-shadow:0 4px 14px rgba(6,78,47,.18);
+}
+
+.titulo-pos {
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:.3px;
+}
+
+.modo-compacto {
+  display:inline-block;
+  margin-top:4px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#16a34a;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.usuario-compacto {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  text-align:right;
+  font-size:13px;
+  color:#fff3d1;
+}
+
+
+/* =========================================
+   BUSCADOR + ESCÁNER
+========================================= */
+
+.barra-busqueda {
+  display:grid;
+  grid-template-columns:1fr 52px;
+  gap:8px;
+  align-items:stretch;
+  margin-bottom:12px;
+}
+
+.barra-busqueda input {
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  font-size:17px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  background:white;
+  outline:none;
+}
+
+.barra-busqueda input:focus {
+  border-color:#0b8043;
+  box-shadow:0 0 0 3px rgba(11,128,67,.12);
+}
+
+.btn-escaner-compacto {
+  width:52px;
+  height:52px;
+  margin:0;
+  padding:0;
+  border-radius:12px;
+  background:#0b8043;
+  font-size:22px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.btn-escaner-compacto.activo {
+  background:#d93025;
+}
+/* =========================================
+   ESTADO DE CONEXIÓN
+========================================= */
+.estado-conexion {
+  display:inline-block;
+  margin-top:4px;
+  padding:3px 7px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.estado-conexion.online {
+  background:#dcfce7;
+  color:#166534;
+}
+
+.estado-conexion.offline {
+  background:#fee2e2;
+  color:#b91c1c;
+}
+/* =========================================
+   CARRITO VACÍO
+========================================= */
+
+.carrito-vacio {
+  background:white;
+  padding:30px 16px;
+  border-radius:14px;
+  text-align:center;
+  color:#6b7280;
+  box-shadow:0 1px 3px rgba(0,0,0,.10);
+  margin-bottom:10px;
+}
+
+.carrito-vacio-icono {
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.carrito-vacio-titulo {
+  color:#374151;
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:4px;
+}
+
+
+/* =========================================
+   BOTÓN COBRAR
+========================================= */
+
+.btn-cobrar {
+  background:#064e2f;
+  width:100%;
+  min-height:60px;
+  font-size:21px;
+  font-weight:800;
+  border-radius:16px;
+  box-shadow:0 6px 16px rgba(6,78,47,.22);
+}
+  </style>
+</head>
+
+<body>
+
+<div id="pantallaLogin" class="login-pos">
+
+  <div class="login-logo">
+    <img src="logo-emi.png" alt="Abarrotes EMI">
+  </div>
+
+  <h1>EMI POS</h1>
+
+  <div class="login-subtitulo">
+    Punto de Venta
+  </div>
+
+  <input
+    id="pin"
+    type="password"
+    placeholder="Ingresa PIN"
+    style="width:100%; padding:14px; font-size:18px; border-radius:10px; border:1px solid #ccc;"
+  >
+
+  <button class="btn-cargar" onclick="login()">Entrar</button>
+  <div id="msgLogin" style="text-align:center; font-weight:bold;"></div>
+</div>
+
+<div id="pantallaVenta" style="display:none;">
+  
+<div class="encabezado-pos">
+
+  <div>
+
+<div class="titulo-pos">
+  EMI POS
+</div>
+
+<div
+  id="estadoConexion"
+  class="estado-conexion online"
+>
+  ● Online
+</div>
+    <div
+      id="modoActual"
+      class="modo-compacto"
+    >
+      🟢 VENTA
+    </div>
+  </div>
+
+  <div class="usuario-compacto">
+
+    <div id="usuarioPantalla">
+      Usuario
+    </div>
+
+    <button
+      class="btn-salir-mini"
+      onclick="cerrarSesion()"
+      title="Cerrar sesión"
+    >
+      🚪
+    </button>
+
+  </div>
+
+</div>
+
+
+<div id="estado" style="display:none;">Esperando...</div>
+
+<div class="barra-busqueda">
+
+  <input
+    type="text"
+    id="buscador"
+    placeholder="Buscar producto o código..."
+    onkeyup="filtrarProductos()"
+  >
+
+  <button
+    id="btnEscanerCompacto"
+    class="btn-escaner-compacto"
+    onclick="alternarEscaner()"
+    title="Escanear código"
+  >
+    📷
+  </button>
+
+</div>
+<div
+  id="sugerencias"
+  style="
+    display:none;
+    background:white;
+    border:1px solid #ddd;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:-6px;
+    margin-bottom:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+    position:relative;
+    z-index:50;
+  "
+></div>
+<div
+  id="reader"
+  style="
+    display:none;
+    max-width:180px;
+    margin:auto;
+  "
+></div>
+	<div
+  id="mensajePOS"
+  style="
+    display:none;
+    padding:10px;
+    margin:10px 0;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+  "
+></div>
+
+ <h2 id="tituloCarrito">Carrito</h2>
+  <div id="carrito"></div>
+
+  <div id="total">TOTAL: $0.00</div>
+
+<div id="bloqueCompra" style="display:none;">
+
+  <h2>Proveedor</h2>
+
+  <input
+    id="proveedorCompra"
+    type="text"
+    placeholder="Nombre del proveedor..."
+    style="
+      width:100%;
+      padding:14px;
+      font-size:18px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      margin-bottom:12px;
+    "
+  >
+<h2>Factura proveedor</h2>
+
+<input
+  id="facturaCompra"
+  type="text"
+  placeholder="Ej. A-15487"
+  style="
+    width:100%;
+    padding:14px;
+    font-size:18px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:12px;
+  "
+>
+<h2>Observaciones</h2>
+
+<textarea
+  id="observacionCompra"
+  placeholder="Ej. mercancía incompleta, entrega parcial, descuento aplicado..."
+  style="
+    width:100%;
+    padding:14px;
+    font-size:18px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:12px;
+    min-height:90px;
+  "
+></textarea>
+
+<h2>Fecha de compra</h2>
+
+<input
+  id="fechaCompra"
+  type="date"
+  style="
+    width:100%;
+    padding:14px;
+    font-size:18px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:12px;
+  "
+>
+
+</div>
+<div id="bloquePago">
+
+  <h2>Método de pago</h2>
+
+  <select
+    id="metodoPago"
+    onchange="cambiarMetodoPago()"
+    style="
+      width:100%;
+      padding:14px;
+      font-size:18px;
+      border-radius:10px;
+      margin-bottom:12px;
+    "
+  >
+    <option value="EFECTIVO">Efectivo</option>
+    <option value="TARJETA">Tarjeta</option>
+    <option value="TRANSFERENCIA">Transferencia</option>
+    <option value="CREDITO">Crédito</option>
+  </select>
+
+  <div id="bloqueEfectivo">
+
+    <h2>Importe recibido</h2>
+
+    <input
+      type="number"
+      id="importeRecibido"
+      placeholder="0.00"
+      oninput="calcularCambio()"
+      style="
+        width:100%;
+        padding:14px;
+        font-size:18px;
+        border-radius:10px;
+        border:1px solid #ccc;
+        box-sizing:border-box;
+      "
+    >
+
+    <div
+      id="cambio"
+      style="
+        margin-top:10px;
+        font-size:24px;
+        font-weight:bold;
+        color:#0b8043;
+      "
+    >
+      Cambio: ---
+    </div>
+
+  </div>
+
+  <div
+    id="bloqueCredito"
+    style="
+      display:none;
+      background:white;
+      padding:14px;
+      border-radius:12px;
+      margin-bottom:14px;
+      box-shadow:0 1px 3px rgba(0,0,0,.12);
+    "
+  >
+
+    <h2 style="margin-top:0;">
+      Cliente de crédito
+    </h2>
+
+    <select
+      id="clienteCredito"
+      onchange="mostrarDatosClienteCredito()"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:14px;
+        font-size:17px;
+        border-radius:10px;
+        margin-bottom:12px;
+      "
+    >
+      <option value="">
+        Selecciona un cliente
+      </option>
+    </select>
+
+    <div
+      id="datosClienteCredito"
+      style="
+        display:none;
+        padding:12px;
+        background:#f0fdf4;
+        border-radius:10px;
+        line-height:1.7;
+        margin-bottom:12px;
+      "
+    ></div>
+
+    <label>Fecha límite de pago</label>
+
+    <input
+      id="fechaLimiteCredito"
+      type="date"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:14px;
+        font-size:17px;
+        border-radius:10px;
+        border:1px solid #ccc;
+        margin:6px 0 12px;
+      "
+    >
+
+    <label>Observaciones</label>
+
+    <textarea
+      id="observacionCredito"
+      placeholder="Ej. Paga cada viernes..."
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:14px;
+        font-size:16px;
+        border-radius:10px;
+        border:1px solid #ccc;
+        min-height:80px;
+      "
+    ></textarea>
+
+  </div>
+</div>
+	
+ <button id="btnCobrar" class="btn-cobrar" onclick="cobrar()">Cobrar</button>
+<button
+  id="btnAdmin"
+  class="btn-cargar"
+  onclick="mostrarAdmin()"
+  style="display:none; background:#374151;"
+>
+  ⚙️ Administración
+</button>
+</div>
+<div id="pantallaAdmin" style="display:none;">
+
+  <h1>Administración</h1>
+
+<div id="bloqueModo" style="display:none; margin-bottom:14px;">
+  <label style="font-size:15px; font-weight:bold;">
+    Modo de operación
+  </label>
+
+  <select
+    id="modoOperacion"
+    onchange="cambiarModoOperacion()"
+    style="width:100%; padding:14px; border-radius:10px; font-size:18px; margin-top:6px;"
+  >
+    <option value="VENTA">🟢 Venta</option>
+    <option value="COMPRA">📦 Compra</option>
+    <option value="CONSIGNACION">🤝 Consignación</option>
+  </select>
+</div>
+
+<button class="btn-cargar" onclick="mostrarProductosAdmin()">
+  📦 Productos
+</button>
+
+  <button class="btn-cargar">
+    📋 Inventario
+  </button>
+
+<button
+  class="btn-cargar"
+  onclick="mostrarReportes()"
+>
+  📊 Reportes
+</button>
+<button
+  class="btn-cargar"
+  onclick="mostrarClientesAdmin()"
+>
+  👥 Clientes
+</button>
+<button
+  class="btn-cargar"
+  onclick="mostrarCuentasPorCobrar()"
+  style="background:#7c3aed;"
+>
+  💰 Cuentas por cobrar
+</button>
+<button
+  class="btn-cargar"
+  style="background:#b91c1c;"
+  onclick="cerrarSesion()"
+	>
+	🚪 Cerrar sesión
+</button>
+
+
+  <button
+    class="btn-eliminar"
+    style="width:100%;"
+    onclick="regresarVenta()"
+  >
+    ⬅️ Regresar
+  </button>
+
+</div>
+<div id="pantallaProductos" style="display:none;">
+
+  <h1>Productos</h1>
+
+  <input
+    id="buscadorProductosAdmin"
+    type="text"
+    placeholder="Buscar producto o código..."
+    onkeyup="filtrarProductosAdmin()"
+    style="
+      width:100%;
+      padding:14px;
+      font-size:18px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      margin-bottom:12px;
+    "
+  >
+
+  <button class="btn-cargar" onclick="mostrarFormularioProducto()">
+    ➕ Nuevo producto
+  </button>
+
+  <div id="formProducto" style="display:none; background:white; padding:12px; border-radius:12px; margin-bottom:12px;">
+
+    <h2>Alta de producto</h2>
+	<input id="prodModo" type="hidden" value="NUEVO">
+
+    <input id="prodCodigo" type="text" placeholder="Código interno o código de barras"
+		style="width:100%; padding:12px; font-size:16px; margin-bottom:8px;">
+	  
+		<button class="btn-cargar" onclick="escanearCodigoProducto()">
+  📷 Escanear código del producto
+</button>
+	  <div
+  id="readerProducto"
+  style="
+    display:none;
+    max-width:180px;
+    margin:auto;
+    margin-bottom:12px;
+  "
+></div>
+
+    <input id="prodNombre" type="text" placeholder="Nombre del producto"
+      style="width:100%; padding:12px; font-size:16px; margin-bottom:8px;">
+
+    <select id="prodUnidad"
+      style="width:100%; padding:12px; font-size:16px; margin-bottom:8px;">
+      <option value="PZ">PZ</option>
+      <option value="KG">KG</option>
+      <option value="L">L</option>
+      <option value="ML">ML</option>
+      <option value="GR">GR</option>
+      <option value="CAJA">CAJA</option>
+      <option value="PAQ">PAQ</option>
+    </select>
+
+    <input id="prodCosto" type="number" placeholder="Costo"
+      style="width:100%; padding:12px; font-size:16px; margin-bottom:8px;">
+
+    <input id="prodPrecio" type="number" placeholder="Precio venta"
+      style="width:100%; padding:12px; font-size:16px; margin-bottom:8px;">
+
+    <select id="prodConsignacion"
+      style="width:100%; padding:12px; font-size:16px; margin-bottom:8px;">
+      <option value="PROPIO">PROPIO</option>
+      <option value="CONSIGNACION">CONSIGNACION</option>
+    </select>
+
+    <button class="btn-cargar" onclick="guardarProductoAdmin()">
+      Guardar producto
+    </button>
+
+    <button class="btn-eliminar" style="width:100%;" onclick="ocultarFormularioProducto()">
+      Cancelar
+    </button>
+
+  </div>
+
+  <div id="listaProductosAdmin"></div>
+
+  <button class="btn-eliminar" style="width:100%;" onclick="regresarAdminDesdeProductos()">
+    ⬅️ Regresar
+  </button>
+
+</div>	
+
+<div id="pantallaClientes" style="display:none;">
+
+  <h1>👥 Clientes</h1>
+
+  <input
+    id="buscadorClientes"
+    type="text"
+    placeholder="Buscar por nombre, teléfono o ID..."
+    oninput="filtrarClientesAdmin()"
+    style="
+      width:100%;
+      box-sizing:border-box;
+      padding:14px;
+      font-size:18px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      margin-bottom:12px;
+    "
+  >
+
+  <button
+    class="btn-cargar"
+    onclick="mostrarFormularioCliente()"
+  >
+    ➕ Nuevo cliente
+  </button>
+
+  <div
+    id="formCliente"
+    style="
+      display:none;
+      background:white;
+      padding:14px;
+      border-radius:12px;
+      margin-bottom:14px;
+      box-shadow:0 1px 3px rgba(0,0,0,.12);
+    "
+  >
+
+    <h2 id="tituloFormularioCliente">
+      Alta de cliente
+    </h2>
+
+    <input
+      id="clienteModo"
+      type="hidden"
+      value="NUEVO"
+    >
+
+    <input
+      id="clienteId"
+      type="hidden"
+    >
+
+    <label>Nombre</label>
+
+    <input
+      id="clienteNombre"
+      type="text"
+      placeholder="Nombre completo"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+        font-size:16px;
+        margin:6px 0 10px;
+      "
+    >
+
+    <label>Teléfono</label>
+
+    <input
+      id="clienteTelefono"
+      type="tel"
+      placeholder="Número telefónico"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+        font-size:16px;
+        margin:6px 0 10px;
+      "
+    >
+
+    <label>Dirección</label>
+
+    <textarea
+      id="clienteDireccion"
+      placeholder="Dirección o referencia"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+        font-size:16px;
+        min-height:80px;
+        margin:6px 0 10px;
+      "
+    ></textarea>
+
+    <label>Límite de crédito</label>
+
+    <input
+      id="clienteLimiteCredito"
+      type="number"
+      min="0"
+      step="0.01"
+      value="0"
+      placeholder="0.00"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+        font-size:16px;
+        margin:6px 0 10px;
+      "
+    >
+
+    <div id="bloqueClienteActivo" style="display:none;">
+
+      <label>Estado</label>
+
+      <select
+        id="clienteActivo"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:12px;
+          font-size:16px;
+          margin:6px 0 10px;
+        "
+      >
+        <option value="SI">Activo</option>
+        <option value="NO">Inactivo</option>
+      </select>
+
+    </div>
+
+    <button
+      class="btn-cargar"
+      onclick="guardarClienteAdmin()"
+    >
+      Guardar cliente
+    </button>
+
+    <button
+      class="btn-eliminar"
+      style="width:100%;"
+      onclick="ocultarFormularioCliente()"
+    >
+      Cancelar
+    </button>
+
+  </div>
+
+  <div id="listaClientesAdmin"></div>
+
+  <button
+    class="btn-eliminar"
+    style="width:100%;"
+    onclick="regresarAdminDesdeClientes()"
+  >
+    ⬅️ Regresar
+  </button>
+
+</div>
+<div
+  id="pantallaCuentasPorCobrar"
+  style="display:none;"
+>
+
+  <h1>💰 Cuentas por cobrar</h1>
+
+  <div
+    style="
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    "
+  >
+
+    <div class="item-carrito">
+      <div style="font-size:13px;color:#666;">
+        Saldo pendiente
+      </div>
+
+      <div
+        id="cxpSaldoTotal"
+        style="
+          font-size:22px;
+          font-weight:bold;
+          color:#b91c1c;
+        "
+      >
+        $0.00
+      </div>
+    </div>
+
+    <div class="item-carrito">
+      <div style="font-size:13px;color:#666;">
+        Cuentas pendientes
+      </div>
+
+      <div
+        id="cxpPendientes"
+        style="
+          font-size:22px;
+          font-weight:bold;
+        "
+      >
+        0
+      </div>
+    </div>
+
+    <div class="item-carrito">
+      <div style="font-size:13px;color:#666;">
+        Cuentas vencidas
+      </div>
+
+      <div
+        id="cxpVencidas"
+        style="
+          font-size:22px;
+          font-weight:bold;
+          color:#dc2626;
+        "
+      >
+        0
+      </div>
+    </div>
+
+  </div>
+
+  <input
+    id="buscadorCuentas"
+    type="text"
+    placeholder="Buscar cliente, folio o cuenta..."
+    oninput="filtrarCuentasPorCobrar()"
+    style="
+      width:100%;
+      box-sizing:border-box;
+      padding:14px;
+      font-size:17px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      margin-bottom:12px;
+    "
+  >
+
+  <select
+    id="filtroEstadoCuentas"
+    onchange="filtrarCuentasPorCobrar()"
+    style="
+      width:100%;
+      box-sizing:border-box;
+      padding:14px;
+      font-size:17px;
+      border-radius:10px;
+      margin-bottom:12px;
+    "
+  >
+    <option value="PENDIENTES">
+      Pendientes y vencidas
+    </option>
+
+    <option value="TODAS">
+      Todas
+    </option>
+
+    <option value="LIQUIDADO">
+      Liquidadas
+    </option>
+
+    <option value="VENCIDO">
+      Vencidas
+    </option>
+  </select>
+
+  <div id="listaCuentasPorCobrar"></div>
+
+  <button
+    class="btn-eliminar"
+    style="width:100%;"
+    onclick="regresarAdminDesdeCuentas()"
+  >
+    ⬅️ Regresar
+  </button>
+
+</div>
+
+
+	
+<div id="pantallaReportes" style="display:none;">
+
+  <h1>📊 Reportes</h1>
+
+  <div
+    style="
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-bottom:18px;
+    "
+  >
+
+    <div class="item-carrito">
+      <h3>💰 Venta del día</h3>
+      <div id="repVentaHoy" style="font-size:24px;font-weight:bold;">
+        $0.00
+      </div>
+    </div>
+
+    <div class="item-carrito">
+      <h3>📦 Reinversión</h3>
+      <div id="repCostoReinversion" style="font-size:24px;font-weight:bold;">
+        $0.00
+      </div>
+    </div>
+
+    <div class="item-carrito">
+      <h3>💵 Utilidad</h3>
+      <div id="repUtilidad" style="font-size:24px;font-weight:bold;">
+        $0.00
+      </div>
+    </div>
+
+    <div class="item-carrito">
+      <h3>🧾 Tickets</h3>
+      <div id="repTickets" style="font-size:24px;font-weight:bold;">
+        0
+      </div>
+    </div>
+
+  </div>
+
+  <h2>💳 Métodos de pago</h2>
+
+  <div class="item-carrito">
+    <h3>💵 Efectivo</h3>
+    <div id="repEfectivo" style="font-size:22px;font-weight:bold;">$0.00</div>
+  </div>
+
+  <div class="item-carrito">
+    <h3>💳 Tarjeta</h3>
+    <div id="repTarjeta" style="font-size:22px;font-weight:bold;">$0.00</div>
+  </div>
+
+  <div class="item-carrito">
+    <h3>🏦 Transferencia</h3>
+    <div id="repTransferencia" style="font-size:22px;font-weight:bold;">$0.00</div>
+  </div>
+
+  <div style="text-align:center; color:#555; margin:14px 0;" id="repActualizacion">
+    Última actualización: --
+  </div>
+
+  <h2>📅 Histórico</h2>
+
+  <button class="btn-cargar" onclick="cargarReporteDias(7)">
+    Últimos 7 días
+  </button>
+
+  <button class="btn-cargar" onclick="cargarReporteDias(15)">
+    Últimos 15 días
+  </button>
+
+  <button class="btn-cargar" onclick="cargarReporteDias(30)">
+    Último mes
+  </button>
+
+  <div id="tablaReporteDias"></div>
+
+  <button
+    class="btn-eliminar"
+    onclick="regresarAdminDesdeReportes()"
+    style="width:100%;"
+  >
+    ⬅️ Regresar
+  </button>
+
+</div>
+<script>
+	
+
+// ==================================================
+// CONFIGURACIÓN
+// ==================================================
+
+	
+const API_URL = "https://script.google.com/macros/s/AKfycbz2mzbagjmu6tQH-28eyPfFRdm5z1A33CepLmeXCRbB93VaJftw_jaDyMosSVz5Mbx6ZA/exec";
+const LIMITE_CREDITO_OFFLINE = 1000;
+
+const CLAVE_CLIENTES_OFFLINE =
+  "POS_CLIENTES_OFFLINE";
+
+
+// ==================================================
+// ESTADO GLOBAL POS
+// ==================================================
+
+	
+const POS = {
+
+  // Sistema
+  version: "1.0.0",
+
+  // Operación
+  modo: "VENTA",
+
+  // Usuario
+  usuario: "",
+  rol: "",
+
+  // Catálogos
+  productos: [],
+	clientes: [],
+	cuentasPorCobrar: [],
+
+  // Venta actual
+  carrito: [],
+	productoPendiente: null,
+	volverACompra: false,
+
+  // Escáner
+  escaner: null,
+  escaneando: false,
+  ultimoCodigoEscaneado: "",
+  tiempoUltimoEscaneo: 0,
+
+  // Configuración
+  configuracion: {
+
+    sonido: true,
+    sesionActiva: false
+
+  }
+
+};
+
+
+// ==================================================
+// LOGIN Y SESIÓN
+// ==================================================
+	async function login() {
+  const pin = document.getElementById("pin").value.trim();
+  const msg = document.getElementById("msgLogin");
+
+  if (pin === "") {
+    msg.innerText = "Ingresa un PIN";
+    return;
+  }
+
+  msg.innerText = "Validando...";
+
+  try {
+    const url = API_URL + "?action=login&pin=" + encodeURIComponent(pin);
+    const respuesta = await fetch(url);
+    const texto = await respuesta.text();
+
+    console.log("RESPUESTA LOGIN:", texto);
+
+    let data;
+
+    try {
+      data = JSON.parse(texto);
+    } catch (e) {
+      msg.innerText = "La API no respondió JSON. Revisa permisos o publicación.";
+      return;
+    }
+
+    if (data.ok) {
+      POS.usuario = data.usuario;
+      POS.rol = data.rol || "VENDEDOR";
+
+      guardarSesion();
+
+      document.getElementById("pantallaLogin").style.display = "none";
+      document.getElementById("pantallaVenta").style.display = "block";
+
+      document.getElementById("estado").innerText = "Usuario: " + POS.usuario;
+
+      document.getElementById("usuarioPantalla").innerText =
+        POS.usuario + " · " + POS.rol;
+
+      cargarProductos();
+      cambiarMetodoPago();
+
+      if (POS.rol === "ADMIN") {
+        document.getElementById("btnAdmin").style.display = "block";
+        document.getElementById("bloqueModo").style.display = "block";
+      }
+
+    } else {
+      msg.innerText = data.mensaje || "PIN incorrecto";
+    }
+
+  } catch (error) {
+    msg.innerText = "Error de conexión: " + error.message;
+  }
+}
+	
+	function guardarSesion() {
+
+  const hoy = new Date().toISOString().slice(0, 10);
+
+  localStorage.setItem("POS_SESION", JSON.stringify({
+
+    usuario: POS.usuario,
+    rol: POS.rol,
+    fecha: hoy
+
+  }));
+
+  POS.configuracion.sesionActiva = true;
+
+}
+function cargarSesion() {
+
+  const sesionGuardada = localStorage.getItem("POS_SESION");
+
+  if (!sesionGuardada) return;
+
+  const sesion = JSON.parse(sesionGuardada);
+  const hoy = new Date().toISOString().slice(0, 10);
+
+  if (sesion.fecha !== hoy) {
+    localStorage.removeItem("POS_SESION");
+    return;
+  }
+
+  POS.usuario = sesion.usuario;
+  POS.rol = sesion.rol;
+  POS.configuracion.sesionActiva = true;
+
+  document.getElementById("pantallaLogin").style.display = "none";
+  document.getElementById("pantallaVenta").style.display = "block";
+
+  document.getElementById("estado").innerText = "Usuario: " + POS.usuario;
+
+  document.getElementById("usuarioPantalla").innerText =
+    POS.usuario + " · " + POS.rol;
+
+  if (POS.rol === "ADMIN") {
+    document.getElementById("btnAdmin").style.display = "block";
+	document.getElementById("bloqueModo").style.display = "block";
+  }
+
+  cargarProductos();
+  cambiarMetodoPago();
+
+}
+
+function cerrarSesion() {
+if (!confirm("¿Deseas cerrar la sesión?")) return;
+
+  localStorage.removeItem("POS_SESION");
+
+  POS.configuracion.sesionActiva = false;
+
+  POS.usuario = "";
+  POS.rol = "";
+
+  document.getElementById("pin").value = "";
+  document.getElementById("msgLogin").innerText = "";
+
+  document.getElementById("pantallaAdmin").style.display = "none";
+  document.getElementById("pantallaVenta").style.display = "none";
+  document.getElementById("pantallaLogin").style.display = "block";
+	document.getElementById("pantallaClientes").style.display = "none";
+	document.getElementById(
+  "pantallaCuentasPorCobrar"
+).style.display = "none";
+
+document.getElementById(
+  "modalAbono"
+).style.display = "none";
+
+  document.getElementById("btnAdmin").style.display = "none";
+	document.getElementById("bloqueModo").style.display = "none";
+
+  limpiarOperacion();
+
+}
+// ==================================================
+// PRODUCTOS
+// ==================================================
+function mostrarProductosAdmin() {
+
+  document.getElementById("pantallaAdmin").style.display = "none";
+  document.getElementById("pantallaProductos").style.display = "block";
+
+  renderProductosAdmin(POS.productos);
+history.pushState(null, "", location.href);
+
+}
+
+function renderProductosAdmin(lista) {
+
+  const contenedor = document.getElementById("listaProductosAdmin");
+
+  contenedor.innerHTML = "";
+
+  if (!lista || lista.length === 0) {
+    contenedor.innerHTML = `
+      <div style="background:white; padding:14px; border-radius:12px;">
+        No hay productos para mostrar.
+      </div>
+    `;
+    return;
+  }
+
+  lista.forEach(producto => {
+
+    const div = document.createElement("div");
+
+    div.className = "item-carrito";
+
+    div.innerHTML = `
+      <div class="item-linea">
+        <div>
+          <div class="item-nombre">${producto.producto}</div>
+          <div class="item-info">
+            Código: ${producto.codigo}<br>
+            Existencia: ${producto.existencia || 0} ${producto.unidad || "PZ"}<br>
+            Costo prom.: $${Number(producto.costo || 0).toFixed(2)}<br>
+            Precio venta: $${Number(producto.precio || 0).toFixed(2)}<br>
+            Tipo: ${producto.consignacion || "PROPIO"}
+          </div>
+        </div>
+
+        <div class="item-importe">
+          ${producto.activo === "SI" ? "🟢" : "🔴"}
+        </div>
+      </div>
+
+      <div class="item-botones">
+      <button onclick="editarProductoAdmin('${producto.codigo}')">
+  ✏️ Editar
+</button>     
+      </div>
+    `;
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+function filtrarProductosAdmin() {
+
+  const texto = document
+    .getElementById("buscadorProductosAdmin")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if (texto === "") {
+    renderProductosAdmin(POS.productos);
+    return;
+  }
+
+  const filtrados = POS.productos.filter(p =>
+    String(p.codigo).toLowerCase().includes(texto) ||
+    String(p.producto).toLowerCase().includes(texto)
+  );
+
+  renderProductosAdmin(filtrados);
+
+}
+
+function mostrarFormularioProducto() {
+
+  document.getElementById("formProducto").style.display = "block";
+
+  document.getElementById("prodCodigo").value = "";
+  document.getElementById("prodNombre").value = "";
+  document.getElementById("prodCosto").value = "";
+  document.getElementById("prodPrecio").value = "";
+
+  document.getElementById("prodUnidad").value = "PZ";
+  document.getElementById("prodConsignacion").value = "PROPIO";
+
+	document.getElementById("prodModo").value = "NUEVO";
+	document.getElementById("prodCodigo").disabled = false;
+	document.getElementById("prodCodigo").focus();
+
+}
+
+function ocultarFormularioProducto() {
+
+  document.getElementById("formProducto").style.display = "none";
+
+}
+
+function escanearCodigoProducto() {
+
+  const reader = document.getElementById("readerProducto");
+
+  reader.style.display = "block";
+
+  const scannerProducto = new Html5Qrcode("readerProducto");
+
+  scannerProducto.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: 180
+    },
+    (codigoLeido) => {
+
+      const codigo = codigoLeido.trim();
+
+      document.getElementById("prodCodigo").value = codigo;
+
+      scannerProducto.stop().then(() => {
+        scannerProducto.clear();
+        reader.style.display = "none";
+      });
+
+      mostrarMensaje("✅ Código capturado: " + codigo);
+
+    },
+    (error) => {
+      // Ignorar errores de lectura
+    }
+  ).catch(err => {
+    alert("Error cámara: " + err);
+    reader.style.display = "none";
+  });
+}
+
+	async function guardarProductoAdmin() {
+
+  const producto = {
+    codigo: document.getElementById("prodCodigo").value.trim(),
+    producto: document.getElementById("prodNombre").value.trim(),
+    costo: Number(document.getElementById("prodCosto").value || 0),
+    precio: Number(document.getElementById("prodPrecio").value || 0),
+    unidad: document.getElementById("prodUnidad").value,
+    consignacion: document.getElementById("prodConsignacion").value,
+    existencia: 0
+  };
+
+  if (producto.codigo === "") {
+    alert("Captura el código.");
+    return;
+  }
+
+  if (producto.producto === "") {
+    alert("Captura el nombre.");
+    return;
+  }
+
+ const modoProducto = document.getElementById("prodModo").value;
+alert("MODO ACTUAL: " + modoProducto);
+
+const accion =
+  modoProducto === "EDITAR"
+    ? "actualizarProducto"
+    : "guardarProducto";
+
+const url =
+  API_URL +
+  "?action=" + accion + "&data=" +
+  encodeURIComponent(JSON.stringify(producto));
+
+  const respuesta = await fetch(url);
+  const data = await respuesta.json();
+alert(JSON.stringify(data));
+  if (!data.ok) {
+    alert(data.mensaje);
+    return;
+  }
+
+  alert("✅ Producto guardado");
+
+  ocultarFormularioProducto();
+
+  await cargarProductos();
+
+  if (POS.volverACompra && POS.productoPendiente) {
+
+    const codigoNuevo = POS.productoPendiente;
+
+    let existe = POS.productos.some(
+      p => String(p.codigo).trim() === codigoNuevo
+    );
+
+    if (!existe) {
+      await cargarProductos();
+
+      existe = POS.productos.some(
+        p => String(p.codigo).trim() === codigoNuevo
+      );
+    }
+
+    if (!existe) {
+      alert("El producto se guardó, pero aún no se ha sincronizado. Intenta nuevamente.");
+      return;
+    }
+
+    POS.productoPendiente = null;
+    POS.volverACompra = false;
+
+    document.getElementById("pantallaProductos").style.display = "none";
+    document.getElementById("pantallaAdmin").style.display = "none";
+    document.getElementById("pantallaVenta").style.display = "block";
+
+    document.getElementById("modoOperacion").value = "COMPRA";
+    POS.modo = "COMPRA";
+
+    document.getElementById("bloquePago").style.display = "none";
+    document.getElementById("bloqueCompra").style.display = "block";
+    document.getElementById("btnCobrar").innerText = "Guardar compra";
+    document.getElementById("tituloCarrito").innerText = "Detalle de compra";
+
+    const modo = document.getElementById("modoActual");
+    modo.innerText = "📦 COMPRA";
+    modo.style.background = "#2563eb";
+    modo.style.color = "white";
+
+    agregarAlCarrito(codigoNuevo, "ALTA_PRODUCTO");
+
+    mostrarMensaje("✅ Producto creado y agregado a compra");
+
+    return;
+  }
+
+  renderProductosAdmin(POS.productos);
+}
+async function cargarProductos() {
+  const estado =
+    document.getElementById("estado");
+
+  estado.innerText =
+    "Cargando productos...";
+
+  try {
+    const respuesta = await fetch(
+      API_URL + "?action=productos",
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!respuesta.ok) {
+      throw new Error(
+        "Respuesta HTTP " + respuesta.status
+      );
+    }
+
+    const data =
+      await respuesta.json();
+
+    if (!data.ok) {
+      throw new Error(
+        data.mensaje ||
+        "La API no devolvió los productos"
+      );
+    }
+
+    POS.productos =
+      data.productos || [];
+
+    localStorage.setItem(
+      "POS_PRODUCTOS_OFFLINE",
+      JSON.stringify(POS.productos)
+    );
+
+    localStorage.setItem(
+      "POS_PRODUCTOS_FECHA",
+      new Date().toISOString()
+    );
+
+    estado.innerText =
+      "Productos cargados: " +
+      POS.productos.length;
+
+    if (
+      document.getElementById(
+        "pantallaProductos"
+      ).style.display === "block"
+    ) {
+      renderProductosAdmin(
+        POS.productos
+      );
+    }
+
+    actualizarEstadoConexion();
+
+  } catch (error) {
+    const productosGuardados =
+      localStorage.getItem(
+        "POS_PRODUCTOS_OFFLINE"
+      );
+
+    if (!productosGuardados) {
+      POS.productos = [];
+
+      estado.innerText =
+        "Sin conexión y sin catálogo guardado";
+
+      actualizarEstadoConexion();
+
+      mostrarMensaje(
+        "❌ No hay conexión y todavía no existe un catálogo offline.",
+        "error"
+      );
+
+      return;
+    }
+
+    try {
+      POS.productos =
+        JSON.parse(productosGuardados);
+
+      estado.innerText =
+        "Modo offline · Productos: " +
+        POS.productos.length;
+
+      actualizarEstadoConexion();
+
+      mostrarMensaje(
+        "📴 Sin conexión. Usando catálogo guardado."
+      );
+
+      if (
+        document.getElementById(
+          "pantallaProductos"
+        ).style.display === "block"
+      ) {
+        renderProductosAdmin(
+          POS.productos
+        );
+      }
+
+    } catch (errorLocal) {
+      POS.productos = [];
+
+      estado.innerText =
+        "El catálogo offline está dañado";
+
+      mostrarMensaje(
+        "❌ No fue posible leer el catálogo offline.",
+        "error"
+      );
+    }
+  }
+}
+function filtrarProductos() {
+
+  const texto = document
+    .getElementById("buscador")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const sugerencias =
+    document.getElementById("sugerencias");
+
+  sugerencias.innerHTML = "";
+
+  if (texto === "") {
+
+    sugerencias.style.display = "none";
+    return;
+
+  }
+
+  const filtrados = POS.productos.filter(p =>
+
+    p.producto.toLowerCase().includes(texto) ||
+
+    p.codigo.toLowerCase().includes(texto)
+
+  );
+
+  if (filtrados.length === 0) {
+
+    sugerencias.style.display = "none";
+    return;
+
+  }
+
+  // Si el código es exacto, agregar automáticamente
+
+  const exacto = POS.productos.find(p =>
+    p.codigo.toLowerCase() === texto
+  );
+
+  if (exacto) {
+
+    agregarAlCarrito(exacto.codigo);
+
+    document.getElementById("buscador").value = "";
+
+    sugerencias.style.display = "none";
+
+    return;
+
+  }
+
+  // Mostrar máximo 8 sugerencias
+
+  filtrados.slice(0,8).forEach(producto => {
+
+    const div = document.createElement("div");
+
+    div.style.padding = "10px";
+    div.style.borderBottom = "1px solid #eee";
+    div.style.cursor = "pointer";
+
+    div.innerHTML = `
+      <strong>${producto.producto}</strong><br>
+      <small>${producto.codigo}</small>
+      <span style="float:right; color:#0b8043; font-weight:bold;">
+        $${producto.precio.toFixed(2)}
+      </span>
+    `;
+
+    div.onclick = () => {
+
+    agregarAlCarrito(producto.codigo, "BUSCADOR");
+
+      document.getElementById("buscador").value = "";
+
+      sugerencias.style.display = "none";
+
+    };
+
+    sugerencias.appendChild(div);
+
+  });
+
+  sugerencias.style.display = "block";
+
+}
+function editarProductoAdmin(codigo) {
+
+  const producto = POS.productos.find(
+    p => String(p.codigo).trim() === String(codigo).trim()
+  );
+
+  if (!producto) {
+    alert("Producto no encontrado");
+    return;
+  }
+
+  document.getElementById("formProducto").style.display = "block";
+
+  document.getElementById("prodModo").value = "EDITAR";
+
+  document.getElementById("prodCodigo").value = producto.codigo;
+  document.getElementById("prodNombre").value = producto.producto;
+  document.getElementById("prodCosto").value = producto.costo || 0;
+  document.getElementById("prodPrecio").value = producto.precio || 0;
+  document.getElementById("prodUnidad").value = producto.unidad || "PZ";
+  document.getElementById("prodConsignacion").value = producto.consignacion || "PROPIO";
+
+  document.getElementById("prodCodigo").disabled = true;
+
+  document.getElementById("prodNombre").focus();
+	document.getElementById("formProducto").scrollIntoView({
+  behavior: "smooth",
+  block: "start"
+});
+}
+//
+//OFFLINE
+//
+function guardarClientesOffline(
+  clientes
+) {
+
+  localStorage.setItem(
+    CLAVE_CLIENTES_OFFLINE,
+    JSON.stringify(clientes || [])
+  );
+
+  localStorage.setItem(
+    "POS_CLIENTES_FECHA",
+    new Date().toISOString()
+  );
+}
+
+
+function obtenerClientesOffline() {
+
+  const texto =
+    localStorage.getItem(
+      CLAVE_CLIENTES_OFFLINE
+    );
+
+  if (!texto) {
+    return [];
+  }
+
+  try {
+
+    const clientes =
+      JSON.parse(texto);
+
+    return Array.isArray(clientes)
+      ? clientes
+      : [];
+
+  } catch (error) {
+
+    console.error(
+      "No fue posible leer los clientes offline:",
+      error
+    );
+
+    return [];
+  }
+}
+function obtenerCreditoPendienteCliente(
+  idCliente
+) {
+
+  const pendientes =
+    obtenerVentasPendientes();
+
+  return pendientes.reduce(
+    (total, registro) => {
+
+      const venta =
+        registro.venta || {};
+
+      const esCredito =
+        String(
+          venta.metodoPago || ""
+        ).toUpperCase() ===
+        "CREDITO";
+
+      const mismoCliente =
+        String(
+          venta.idCliente || ""
+        ) ===
+        String(idCliente);
+
+      if (
+        esCredito &&
+        mismoCliente
+      ) {
+        return (
+          total +
+          Number(venta.total || 0)
+        );
+      }
+
+      return total;
+    },
+    0
+  );
+}
+function calcularCreditoDisponibleOffline(
+  cliente
+) {
+
+  const limite =
+    Number(
+      cliente.limiteCredito || 0
+    );
+
+  const saldoSincronizado =
+    Number(
+      cliente.saldo || 0
+    );
+
+  const creditoPendiente =
+    obtenerCreditoPendienteCliente(
+      cliente.id
+    );
+
+  const disponibleEstimado =
+    limite -
+    saldoSincronizado -
+    creditoPendiente;
+
+  return Math.max(
+    0,
+    Math.min(
+      disponibleEstimado,
+      LIMITE_CREDITO_OFFLINE
+    )
+  );
+}
+function llenarSelectorClientesCredito(
+  clientes
+) {
+
+  const selector =
+    document.getElementById(
+      "clienteCredito"
+    );
+
+  POS.clientes =
+    (clientes || []).filter(
+      cliente =>
+        String(
+          cliente.activo || ""
+        ).toUpperCase() ===
+        "SI"
+    );
+
+  selector.innerHTML = `
+    <option value="">
+      Selecciona un cliente
+    </option>
+  `;
+
+  POS.clientes.forEach(cliente => {
+
+    const limite =
+      Number(
+        cliente.limiteCredito || 0
+      );
+
+    const saldo =
+      Number(
+        cliente.saldo || 0
+      );
+
+    const disponible =
+      navigator.onLine
+        ? Math.max(
+            0,
+            limite - saldo
+          )
+        : calcularCreditoDisponibleOffline(
+            cliente
+          );
+
+    const opcion =
+      document.createElement(
+        "option"
+      );
+
+    opcion.value =
+      cliente.id;
+
+    opcion.textContent =
+      cliente.nombre +
+      " · Disponible $" +
+      disponible.toFixed(2);
+
+    selector.appendChild(
+      opcion
+    );
+  });
+}
+function actualizarEstadoConexion() {
+
+  const indicador =
+    document.getElementById(
+      "estadoConexion"
+    );
+
+  if (!indicador) return;
+
+  const pendientes =
+    cantidadVentasPendientes();
+
+  if (navigator.onLine) {
+
+    indicador.innerText =
+      pendientes > 0
+        ? "● Online · " +
+          pendientes +
+          " pendiente" +
+          (pendientes === 1 ? "" : "s")
+        : "● Online";
+
+    indicador.classList.remove(
+      "offline"
+    );
+
+    indicador.classList.add(
+      "online"
+    );
+
+  } else {
+
+    indicador.innerText =
+      pendientes > 0
+        ? "● Offline · " +
+          pendientes +
+          " pendiente" +
+          (pendientes === 1 ? "" : "s")
+        : "● Offline";
+
+    indicador.classList.remove(
+      "online"
+    );
+
+    indicador.classList.add(
+      "offline"
+    );
+  }
+}
+
+// ==================================================
+// COLA LOCAL DE VENTAS
+// ==================================================
+
+const CLAVE_VENTAS_PENDIENTES =
+  "POS_VENTAS_PENDIENTES";
+
+
+function obtenerVentasPendientes() {
+
+  const texto = localStorage.getItem(
+    CLAVE_VENTAS_PENDIENTES
+  );
+
+  if (!texto) {
+    return [];
+  }
+
+  try {
+
+    const ventas = JSON.parse(texto);
+
+    return Array.isArray(ventas)
+      ? ventas
+      : [];
+
+  } catch (error) {
+
+    console.error(
+      "La cola local de ventas está dañada:",
+      error
+    );
+
+    return [];
+  }
+}
+
+
+function guardarVentasPendientes(ventas) {
+
+  localStorage.setItem(
+    CLAVE_VENTAS_PENDIENTES,
+    JSON.stringify(ventas)
+  );
+
+  actualizarEstadoConexion();
+}
+
+
+function agregarVentaPendiente(venta) {
+
+  const ventas =
+    obtenerVentasPendientes();
+
+  const yaExiste = ventas.some(
+    item =>
+      String(item.venta.folio) ===
+      String(venta.folio)
+  );
+
+  if (yaExiste) {
+    return false;
+  }
+
+  ventas.push({
+    venta: venta,
+    estado: "PENDIENTE",
+    fechaLocal: new Date().toISOString(),
+    intentos: 0,
+    ultimoError: ""
+  });
+
+  guardarVentasPendientes(ventas);
+
+  return true;
+}
+
+
+function cantidadVentasPendientes() {
+
+  return obtenerVentasPendientes().length;
+}
+async function enviarVentaAlServidor(
+  venta
+) {
+
+  const url =
+    API_URL +
+    "?action=guardarVenta&data=" +
+    encodeURIComponent(
+      JSON.stringify(venta)
+    );
+
+  const respuesta = await fetch(
+    url,
+    {
+      cache: "no-store"
+    }
+  );
+
+  if (!respuesta.ok) {
+    throw new Error(
+      "Respuesta HTTP " +
+      respuesta.status
+    );
+  }
+
+  const texto =
+    await respuesta.text();
+
+  let data;
+
+  try {
+
+    data = JSON.parse(texto);
+
+  } catch (error) {
+
+    throw new Error(
+      "Apps Script no respondió JSON"
+    );
+  }
+
+  return data;
+}
+let sincronizandoVentas = false;
+
+
+async function sincronizarVentasPendientes() {
+
+  if (sincronizandoVentas) {
+    return;
+  }
+
+  if (!navigator.onLine) {
+    return;
+  }
+
+  let pendientes =
+    obtenerVentasPendientes();
+
+  if (pendientes.length === 0) {
+    actualizarEstadoConexion();
+    return;
+  }
+
+  sincronizandoVentas = true;
+
+  mostrarMensaje(
+    "🔄 Sincronizando " +
+    pendientes.length +
+    " venta" +
+    (pendientes.length === 1 ? "" : "s") +
+    "..."
+  );
+
+  const restantes = [];
+
+  let sincronizadas = 0;
+
+  for (const registro of pendientes) {
+
+    try {
+
+      registro.intentos =
+        Number(registro.intentos || 0) + 1;
+
+      const data =
+        await enviarVentaAlServidor(
+          registro.venta
+        );
+
+      if (data.ok) {
+
+        // También se elimina si el backend responde
+        // que el folio ya estaba sincronizado.
+        sincronizadas++;
+
+      } else {
+
+  const esCredito =
+    String(
+      registro.venta.metodoPago || ""
+    ).toUpperCase() ===
+    "CREDITO";
+
+  registro.estado =
+    esCredito
+      ? "CONFLICTO_CREDITO"
+      : "ERROR";
+
+  registro.ultimoError =
+    data.mensaje ||
+    "El servidor rechazó la venta";
+
+  restantes.push(
+    registro
+  );
+}
+
+    } catch (error) {
+
+      registro.estado = "PENDIENTE";
+      registro.ultimoError =
+        error.message;
+
+      restantes.push(registro);
+
+      // Si se volvió a perder la conexión,
+      // no seguimos enviando.
+      if (!navigator.onLine) {
+
+        const indiceActual =
+          pendientes.indexOf(registro);
+
+        const faltantes =
+          pendientes.slice(
+            indiceActual + 1
+          );
+
+        restantes.push(...faltantes);
+
+        break;
+      }
+    }
+  }
+
+  guardarVentasPendientes(
+    restantes
+  );
+
+  sincronizandoVentas = false;
+
+  if (sincronizadas > 0) {
+
+    mostrarMensaje(
+      "✅ " +
+      sincronizadas +
+      " venta" +
+      (sincronizadas === 1 ? "" : "s") +
+      " sincronizada" +
+      (sincronizadas === 1 ? "" : "s")
+    );
+
+    await cargarProductos();
+  }
+
+  if (restantes.length > 0) {
+
+    mostrarMensaje(
+      "⚠️ Quedan " +
+      restantes.length +
+      " venta" +
+      (restantes.length === 1 ? "" : "s") +
+      " pendiente" +
+      (restantes.length === 1 ? "" : "s"),
+      "error"
+    );
+  }
+
+  actualizarEstadoConexion();
+}
+function descontarInventarioLocal(
+  venta
+) {
+
+  venta.items.forEach(itemVenta => {
+
+    const producto =
+      POS.productos.find(
+        producto =>
+          String(producto.codigo) ===
+          String(itemVenta.codigo)
+      );
+
+    if (!producto) {
+      return;
+    }
+
+    producto.existencia =
+      Number(producto.existencia || 0) -
+      Number(itemVenta.cantidad || 0);
+  });
+
+  localStorage.setItem(
+    "POS_PRODUCTOS_OFFLINE",
+    JSON.stringify(POS.productos)
+  );
+}
+
+
+// ==================================================
+// EVENTO DE CONEXION
+// ==================================================
+	
+window.addEventListener(
+  "online",
+  async () => {
+
+    actualizarEstadoConexion();
+
+    mostrarMensaje(
+      "🌐 Conexión restablecida"
+    );
+
+    await sincronizarVentasPendientes();
+	await cargarClientesParaCredito();
+
+    await cargarProductos();
+  }
+);
+window.addEventListener(
+  "offline",
+  () => {
+
+    actualizarEstadoConexion();
+
+    mostrarMensaje(
+      "📴 Sin conexión. Trabajando con datos locales.",
+      "error"
+    );
+  }
+);
+// ==================================================
+// CARRITO
+// ==================================================
+	
+function agregarAlCarrito(codigo, origen = "BUSCADOR") {
+
+  const producto = POS.productos.find(p => p.codigo === codigo);
+
+  if (!producto) return;
+	if (POS.modo === "VENTA" && esUnidadGranel(producto.unidad)) {
+
+ 	 abrirModalGranel(producto);
+
+ 	 return;
+
+}
+  const index = POS.carrito.findIndex(i => i.codigo === codigo);
+
+  if (index >= 0) {
+
+    const item = POS.carrito[index];
+
+    POS.carrito.splice(index, 1);
+    POS.carrito.unshift(item);
+
+    if (origen === "BOTON_MAS") {
+
+      item.cantidad++;
+
+      mostrarMensaje(
+        "➕ " + producto.producto + " x" + item.cantidad
+      );
+
+    } else {
+
+      mostrarMensaje(
+        "⚠️ " + producto.producto + " ya está en carrito. Usa + para agregar otra pieza.",
+        "error"
+      );
+
+    }
+
+    renderCarrito();
+    return;
+  }
+ POS.carrito.unshift({
+
+  codigo: producto.codigo,
+  producto: producto.producto,
+  precio: producto.precio,
+  costo: producto.costo || 0,
+
+  cantidad: 1,
+
+  unidad: producto.unidad || "PZ",
+
+  consignacion: producto.consignacion || "PROPIO"
+
+});
+
+  mostrarMensaje(
+    "✅ " + producto.producto + " agregado"
+  );
+
+  renderCarrito();
+}
+
+	function quitarDelCarrito(codigo) {
+  const item = POS.carrito.find(i => i.codigo === codigo);
+  if (!item) return;
+
+  item.cantidad--;
+
+  if (item.cantidad <= 0) {
+    POS.carrito = POS.carrito.filter(i => i.codigo !== codigo);
+  }
+
+  renderCarrito();
+}
+
+function renderCarrito() {
+  const contenedor = document.getElementById("carrito");
+  const totalDiv = document.getElementById("total");
+
+  contenedor.innerHTML = "";
+
+  let total = 0;
+if (POS.carrito.length === 0) {
+
+  contenedor.innerHTML = `
+    <div class="carrito-vacio">
+
+      <div class="carrito-vacio-icono">
+        🛒
+      </div>
+
+      <div class="carrito-vacio-titulo">
+        No hay productos
+      </div>
+
+      <div>
+        Escanea un código o busca un producto.
+      </div>
+
+    </div>
+  `;
+
+}
+
+  POS.carrito.forEach(item => {
+
+    let costo = Number(item.costo || 0);
+    let precio = Number(item.precio || 0);
+    let cantidad = Number(item.cantidad || 0);
+
+    let importe = 0;
+
+    if (POS.modo === "VENTA") {
+      importe = cantidad * precio;
+    }
+    if (POS.modo === "COMPRA") {
+      importe = cantidad * costo;
+    }
+
+    if (POS.modo === "CONSIGNACION") {
+      importe = cantidad * precio;
+    }
+
+    total += importe;
+
+    let camposCompra = "";
+
+    if (POS.modo === "COMPRA") {
+
+      let utilidad = precio - costo;
+      let margen = precio > 0 ? (utilidad / precio) * 100 : 0;
+
+      let color = "#d1fae5";
+      let texto = "🟢 Margen saludable";
+
+      if (costo <= 0) {
+        color = "#fee2e2";
+        texto = "🔴 Falta capturar el costo";
+      } else if (precio <= costo) {
+        color = "#fee2e2";
+        texto = "🔴 El precio de venta no deja utilidad";
+      } else if (margen < 15) {
+        color = "#fef3c7";
+        texto = "🟡 Margen bajo, revisar precio";
+      }
+
+      camposCompra = `
+        <div style="margin-top:10px;">
+
+          <label>Cantidad comprada (${item.unidad || "PZ"})</label>
+          <input
+    type="number"
+    step="${
+      item.unidad === 'PZ' ||
+      item.unidad === 'CAJA' ||
+      item.unidad === 'PAQ'
+        ? 1
+        : 0.001
+    }"
+
+    value="${cantidad}"
+            onchange="actualizarCantidadCompra('${item.codigo}', this.value)"
+            style="width:100%; padding:10px; font-size:16px; margin-bottom:8px;"
+          >
+
+          <label>Costo unitario</label>
+          <input
+            type="number"
+            value="${costo}"
+            onchange="actualizarCostoCompra('${item.codigo}', this.value)"
+            style="width:100%; padding:10px; font-size:16px; margin-bottom:8px;"
+          >
+
+          <label>Precio venta</label>
+          <input
+            type="number"
+            value="${precio}"
+            onchange="actualizarPrecioCompra('${item.codigo}', this.value)"
+            style="width:100%; padding:10px; font-size:16px; margin-bottom:10px;"
+          >
+
+        </div>
+
+        <div
+          id="utilidad-${item.codigo}"
+          style="
+            margin-top:10px;
+            padding:12px;
+            background:${color};
+            border-radius:10px;
+            font-size:15px;
+            color:#065f46;
+            font-weight:bold;
+            line-height:1.6;
+          "
+        >
+
+          ${texto}
+
+          <hr style="margin:8px 0; border:none; border-top:1px solid rgba(0,0,0,.15);">
+
+          💵 <b>Costo:</b> $${costo.toFixed(2)}<br>
+          🏷️ <b>Venta:</b> $${precio.toFixed(2)}<br>
+          💰 <b>Ganancia:</b> $${utilidad.toFixed(2)}<br>
+          📈 <b>Margen:</b> ${margen.toFixed(2)}%
+
+        </div>
+      `;
+    }
+
+    const div = document.createElement("div");
+    div.className = "item-carrito";
+
+    div.innerHTML = `
+      <div class="item-linea">
+        <div>
+          <div class="item-nombre">${item.producto}</div>
+          <div class="item-info">
+            ${
+              POS.modo === "VENTA"
+                ? `x${cantidad} · $${precio.toFixed(2)}`
+                : POS.modo === "COMPRA"
+                  ? `${cantidad} ${item.unidad || "PZ"} · Costo $${costo.toFixed(2)}`
+                  : `x${cantidad}`
+            }
+          </div>
+        </div>
+
+        <div class="item-importe">$${importe.toFixed(2)}</div>
+      </div>
+
+	${camposCompra}
+
+      <div class="item-botones">
+        <button onclick="agregarAlCarrito('${item.codigo}','BOTON_MAS')">+</button>
+        <button class="btn-eliminar" onclick="quitarDelCarrito('${item.codigo}')">-</button>
+      </div>
+    `;
+
+    contenedor.appendChild(div);
+  });
+
+  let textoTotal = "TOTAL";
+
+  if (POS.modo === "VENTA") textoTotal = "TOTAL VENTA";
+  if (POS.modo === "COMPRA") textoTotal = "TOTAL COMPRA";
+  if (POS.modo === "CONSIGNACION") textoTotal = "TOTAL CONSIGNACIÓN";
+
+  totalDiv.innerText = textoTotal + ": $" + total.toFixed(2);
+
+  calcularCambio();
+
+if (
+  document.getElementById("metodoPago").value ===
+  "CREDITO"
+) {
+  mostrarDatosClienteCredito();
+}
+}
+function actualizarCantidadCompra(codigo, valor) {
+  const item = POS.carrito.find(i => i.codigo === codigo);
+  if (!item) return;
+
+  item.cantidad = Number(valor || 0);
+  renderCarrito();
+}
+
+function actualizarCostoCompra(codigo, valor) {
+  const item = POS.carrito.find(i => i.codigo === codigo);
+  if (!item) return;
+
+  item.costo = Number(valor || 0);
+
+  renderCarrito();
+}
+
+function actualizarPrecioCompra(codigo, valor) {
+  const item = POS.carrito.find(i => i.codigo === codigo);
+  if (!item) return;
+
+  item.precio = Number(valor || 0);
+  renderCarrito();
+}
+function limpiarOperacion() {
+
+  POS.carrito = [];
+
+  renderCarrito();
+
+  document.getElementById("importeRecibido").value = "";
+
+  document.getElementById("cambio").innerText = "Cambio: ---";
+
+  document.getElementById("metodoPago").value = "EFECTIVO";
+
+	document.getElementById("clienteCredito").value = "";
+
+document.getElementById("fechaLimiteCredito").value = "";
+
+document.getElementById("observacionCredito").value = "";
+
+document.getElementById("datosClienteCredito").innerHTML = "";
+
+document.getElementById("datosClienteCredito").style.display = "none";
+
+  cambiarMetodoPago();
+
+  document.getElementById("buscador").value = "";
+	document.getElementById("buscador").focus();
+
+}
+
+// ==================================================
+// COMPRAS
+// ==================================================
+
+// ==================================================
+// PAGOS Y VENTAS
+// ==================================================
+function calcularCambio() {
+
+  const textoRecibido =
+    document.getElementById("importeRecibido").value.trim();
+
+  const total = POS.carrito.reduce(
+    (suma, item) => suma + (item.cantidad * item.precio),
+    0
+  );
+
+  // Aún no captura el importe recibido
+  if (textoRecibido === "") {
+    document.getElementById("cambio").innerText = "Cambio: ---";
+    return;
+  }
+
+  const recibido = Number(textoRecibido);
+  const cambio = recibido - total;
+
+  document.getElementById("cambio").innerText =
+    "Cambio: $" + cambio.toFixed(2);
+}
+async function cambiarMetodoPago() {
+  const metodo =
+    document.getElementById("metodoPago").value;
+
+  const bloqueEfectivo =
+    document.getElementById("bloqueEfectivo");
+
+  const bloqueCredito =
+    document.getElementById("bloqueCredito");
+
+  bloqueEfectivo.style.display =
+    metodo === "EFECTIVO"
+      ? "block"
+      : "none";
+
+  bloqueCredito.style.display =
+    metodo === "CREDITO"
+      ? "block"
+      : "none";
+
+  if (metodo === "CREDITO") {
+    await cargarClientesParaCredito();
+    establecerFechaLimiteCredito();
+  }
+}
+
+async function cobrar() {
+
+  const btnCobrar = document.getElementById("btnCobrar");
+
+  if (btnCobrar.disabled) return;
+
+  if (POS.carrito.length === 0) {
+    alert("El carrito está vacío");
+    return;
+  }
+
+  btnCobrar.disabled = true;
+  btnCobrar.innerText = "Guardando...";
+
+  try {
+
+    if (POS.modo === "VENTA") {
+      await guardarVenta();
+    }
+
+   if (POS.modo === "COMPRA") {
+  await guardarCompra();
+}
+
+    if (POS.modo === "CONSIGNACION") {
+      alert("Modo consignación detectado");
+    }
+
+  } catch (error) {
+
+    alert("Error: " + error.message);
+
+  } finally {
+
+    btnCobrar.disabled = false;
+
+    if (POS.modo === "VENTA") {
+      btnCobrar.innerText = "Cobrar";
+    }
+
+    if (POS.modo === "COMPRA") {
+      btnCobrar.innerText = "Guardar compra";
+    }
+
+    if (POS.modo === "CONSIGNACION") {
+      btnCobrar.innerText = "Guardar consignación";
+    }
+
+  }
+
+}
+async function guardarVenta() {
+
+  const total = POS.carrito.reduce(
+    (suma, item) =>
+      suma +
+      Number(item.cantidad || 0) *
+      Number(item.precio || 0),
+    0
+  );
+
+  const metodoPago =
+    document.getElementById(
+      "metodoPago"
+    ).value;
+
+  const textoRecibido =
+    document.getElementById(
+      "importeRecibido"
+    ).value.trim();
+
+  const recibido =
+    Number(textoRecibido || 0);
+
+  const idCliente =
+    document.getElementById(
+      "clienteCredito"
+    ).value;
+
+  const fechaLimiteCredito =
+    document.getElementById(
+      "fechaLimiteCredito"
+    ).value;
+
+  const observacionCredito =
+    document
+      .getElementById(
+        "observacionCredito"
+      )
+      .value
+      .trim();
+
+
+  // ==============================================
+  // VALIDAR EFECTIVO
+  // ==============================================
+
+  if (metodoPago === "EFECTIVO") {
+
+    if (textoRecibido === "") {
+
+      alert(
+        "Ingresa el importe recibido"
+      );
+
+      return;
+    }
+
+    if (recibido < total) {
+
+      alert(
+        "El importe recibido es menor al total"
+      );
+
+      return;
+    }
+  }
+
+
+  // ==============================================
+  // VALIDAR CRÉDITO
+  // ==============================================
+
+  if (metodoPago === "CREDITO") {
+
+
+    if (idCliente === "") {
+
+      alert(
+        "Selecciona el cliente de crédito"
+      );
+
+      return;
+    }
+
+    const cliente =
+      POS.clientes.find(
+        item =>
+          String(item.id) ===
+          String(idCliente)
+      );
+
+    if (!cliente) {
+
+      alert(
+        "El cliente seleccionado no es válido"
+      );
+
+      return;
+    }
+
+    const limite =
+      Number(
+        cliente.limiteCredito || 0
+      );
+
+    const saldo =
+      Number(
+        cliente.saldo || 0
+      );
+
+   const disponible =
+  navigator.onLine
+    ? limite - saldo
+    : calcularCreditoDisponibleOffline(
+        cliente
+      );
+
+    if (total > disponible) {
+
+      alert(
+        "Crédito insuficiente.\n" +
+        "Disponible: $" +
+        Math.max(
+          0,
+          disponible
+        ).toFixed(2)
+      );
+
+      return;
+    }
+
+    if (fechaLimiteCredito === "") {
+
+      alert(
+        "Captura la fecha límite de pago"
+      );
+
+      return;
+    }
+  }
+
+
+  // ==============================================
+  // CONSTRUIR VENTA
+  // ==============================================
+
+  const venta = {
+
+    folio:
+      "V-" +
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(36)
+        .slice(2, 7)
+        .toUpperCase(),
+
+    usuario:
+      POS.usuario,
+
+    total:
+      total,
+
+    metodoPago:
+      metodoPago,
+
+    idCliente:
+      metodoPago === "CREDITO"
+        ? idCliente
+        : "",
+
+    fechaLimiteCredito:
+      metodoPago === "CREDITO"
+        ? fechaLimiteCredito
+        : "",
+
+    observacionCredito:
+      metodoPago === "CREDITO"
+        ? observacionCredito
+        : "",
+
+    items:
+      POS.carrito.map(item => ({
+        codigo:
+          item.codigo,
+
+        producto:
+          item.producto,
+
+        precio:
+          Number(item.precio || 0),
+
+        costo:
+          Number(item.costo || 0),
+
+        cantidad:
+          Number(item.cantidad || 0),
+
+        unidad:
+          item.unidad || "PZ",
+
+        consignacion:
+          item.consignacion || "PROPIO"
+      }))
+  };
+
+
+  // ==============================================
+  // SI NO HAY CONEXIÓN: GUARDAR LOCALMENTE
+  // ==============================================
+
+  if (!navigator.onLine) {
+
+    const guardada =
+      agregarVentaPendiente(
+        venta
+      );
+
+    if (!guardada) {
+
+      alert(
+        "La venta ya existe en la cola local"
+      );
+
+      return;
+    }
+
+    descontarInventarioLocal(
+      venta
+    );
+	    limpiarOperacion();
+
+    alert(
+      "📴 Venta guardada sin conexión.\n\n" +
+      "Folio: " +
+      venta.folio +
+      "\n\nSe sincronizará cuando vuelva internet."
+    );
+
+    actualizarEstadoConexion();
+
+    return;
+  }
+
+
+  // ==============================================
+  // INTENTAR GUARDAR ONLINE
+  // ==============================================
+
+  try {
+
+    const data =
+      await enviarVentaAlServidor(
+        venta
+      );
+
+    if (!data.ok) {
+
+      alert(
+        "Error: " +
+        (
+          data.mensaje ||
+          "No fue posible guardar la venta"
+        )
+      );
+
+      return;
+    }
+
+    alert(
+      "✅ " +
+      data.mensaje
+    );
+
+    limpiarOperacion();
+
+    await cargarProductos();
+
+  } catch (error) {
+
+    /*
+      Puede ocurrir que Apps Script sí haya recibido
+      la venta, pero la respuesta no haya regresado.
+
+      Guardamos el mismo folio en la cola.
+      El backend evitará duplicarla al sincronizar.
+    */
+
+    const guardada =
+      agregarVentaPendiente(
+        venta
+      );
+
+    if (guardada) {
+
+      descontarInventarioLocal(
+        venta
+      );
+
+      limpiarOperacion();
+
+      alert(
+        "⚠️ No fue posible confirmar la conexión.\n\n" +
+        "La venta quedó protegida en la cola local.\n" +
+        "Folio: " +
+        venta.folio
+      );
+
+      actualizarEstadoConexion();
+
+    } else {
+
+      alert(
+        "La venta ya se encuentra pendiente de sincronización."
+      );
+    }
+  }
+}
+async function guardarCompra() {
+
+  const proveedor = document.getElementById("proveedorCompra").value.trim();
+  const factura = document.getElementById("facturaCompra").value.trim();
+  const observacion = document.getElementById("observacionCompra").value.trim();
+  const fechaCompra = document.getElementById("fechaCompra").value;
+
+  if (proveedor === "") {
+    alert("Captura el proveedor");
+    return;
+  }
+
+  if (fechaCompra === "") {
+    alert("Captura la fecha de compra");
+    return;
+  }
+
+  const total = POS.carrito.reduce(
+    (suma, item) => suma + (Number(item.cantidad) * Number(item.costo || 0)),
+    0
+  );
+
+  const compra = {
+    folio: "C-" + new Date().getTime(),
+    usuario: POS.usuario,
+    proveedor: proveedor,
+    factura: factura,
+    observacion: observacion,
+    fechaCompra: fechaCompra,
+    total: total,
+    items: POS.carrito
+  };
+
+  const url =
+    API_URL +
+    "?action=guardarCompra&data=" +
+    encodeURIComponent(JSON.stringify(compra));
+
+  const respuesta = await fetch(url);
+  const texto = await respuesta.text();
+
+  let data;
+
+  try {
+    data = JSON.parse(texto);
+  } catch (e) {
+    alert("Apps Script no respondió JSON.\nRevisa si la compra se guardó antes de intentar otra vez.");
+    return;
+  }
+
+  if (data.ok) {
+    alert("Compra guardada correctamente");
+
+    document.getElementById("proveedorCompra").value = "";
+    document.getElementById("facturaCompra").value = "";
+    document.getElementById("observacionCompra").value = "";
+    document.getElementById("fechaCompra").value = "";
+
+    limpiarOperacion();
+    cargarProductos();
+
+  } else {
+    alert("Error: " + data.mensaje);
+  }
+}
+// ==================================================
+// ESCÁNER
+// ==================================================	
+function beep() {
+
+  const audio = new (window.AudioContext || window.webkitAudioContext)();
+
+  const osc = audio.createOscillator();
+  const gain = audio.createGain();
+
+  osc.type = "sine";
+  osc.frequency.value = 850;
+
+  gain.gain.value = 0.08;
+
+  osc.connect(gain);
+  gain.connect(audio.destination);
+
+  osc.start();
+
+  setTimeout(() => {
+    osc.stop();
+    audio.close();
+  }, 70);
+
+}
+function alternarEscaner() {
+
+  if (POS.escaneando) {
+    detenerEscaner();
+    return;
+  }
+
+  iniciarEscaner();
+
+}
+function iniciarEscaner() {
+
+  if (POS.escaneando) return;
+
+  document.getElementById("reader").style.display = "block";
+
+  POS.escaner = new Html5Qrcode("reader");
+  POS.escaneando = true;
+
+	const btnEscaner =
+  document.getElementById("btnEscanerCompacto");
+
+if (btnEscaner) {
+  btnEscaner.innerText = "✕";
+  btnEscaner.classList.add("activo");
+}
+
+  POS.escaner.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: 180
+    },
+    (codigoLeido) => {
+
+      const codigo = codigoLeido.trim();
+
+     const producto = POS.productos.find(p =>
+  String(p.codigo).trim() === codigo
+);
+
+if (!producto) {
+
+  if (POS.modo === "COMPRA") {
+
+POS.productoPendiente = codigo;
+POS.volverACompra = true;
+
+detenerEscaner();
+
+mostrarProductosAdmin();
+
+mostrarFormularioProducto();
+
+document.getElementById("prodCodigo").value = codigo;
+
+
+  mostrarMensaje(
+    "📦 Producto no existe. Complétalo y guárdalo.",
+    "error"
+  );
+
+  return;
+}
+
+  if (esAdmin()) {
+
+    mostrarMensaje(
+      "❌ Producto no encontrado: " + codigo + " | Puedes darlo de alta",
+      "error"
+    );
+
+  } else {
+
+    mostrarMensaje(
+      "❌ Producto no encontrado: " + codigo + " | Llame al administrador",
+      "error"
+    );
+
+  }
+
+  return;
+}
+
+      const ahora = Date.now();
+
+      if (
+        codigo === POS.ultimoCodigoEscaneado &&
+        ahora - POS.tiempoUltimoEscaneo < 3000
+      ) {
+        return;
+      }
+
+      POS.ultimoCodigoEscaneado = codigo;
+      POS.tiempoUltimoEscaneo = ahora;
+
+      agregarAlCarrito(producto.codigo, "ESCANER");
+
+      beep();
+
+    },
+    (error) => {
+      // Ignorar errores de lectura
+    }
+  ).catch(err => {
+
+    alert("Error cámara: " + err);
+
+    POS.escaneando = false;
+    POS.escaner = null;
+
+    document.getElementById("reader").style.display = "none";
+
+  });
+}
+function detenerEscaner() {
+
+	const btnEscaner =
+  document.getElementById("btnEscanerCompacto");
+
+if (btnEscaner) {
+  btnEscaner.innerText = "📷";
+  btnEscaner.classList.remove("activo");
+}
+
+  if (!POS.escaner) {
+
+    document.getElementById("reader").style.display = "none";
+
+    POS.escaneando = false;
+
+    return;
+  }
+ POS.escaner.stop().then(() => {
+
+    POS.escaner.clear();
+
+    POS.escaner = null;
+
+    POS.escaneando = false;
+
+    document.getElementById("reader").style.display = "none";
+
+  }).catch(() => {
+
+    POS.escaner = null;
+
+    POS.escaneando = false;
+
+    document.getElementById("reader").style.display = "none";
+
+  });
+const buscador =
+  document.getElementById("buscador");
+
+if (buscador) {
+  buscador.focus();
+}
+}
+// ==================================================
+// ADMINISTRACIÓN
+// ==================================================	
+function mostrarAdmin() {
+
+  document.getElementById("pantallaVenta")
+    .style.display = "none";
+
+  document.getElementById("pantallaAdmin")
+    .style.display = "block";
+	history.pushState(null, "", location.href);
+}
+function regresarVenta() {
+
+  document.getElementById("pantallaAdmin")
+    .style.display = "none";
+
+  document.getElementById("pantallaVenta")
+    .style.display = "block";
+}
+function cambiarModoOperacion() {
+
+  POS.modo = document.getElementById("modoOperacion").value;
+
+  limpiarOperacion();
+
+  const modo = document.getElementById("modoActual");
+  let texto = "";
+
+  if (POS.modo === "VENTA") {
+    document.getElementById("btnCobrar").innerText = "Cobrar";
+    document.getElementById("tituloCarrito").innerText = "Carrito de venta";
+    document.getElementById("bloquePago").style.display = "block";
+	  document.getElementById("bloqueCompra").style.display = "none";
+
+    modo.innerText = "🟢 VENTA";
+    modo.style.background = "#16a34a";
+    modo.style.color = "white";
+
+    texto = "🟢 Modo Venta activado";
+  }
+
+  if (POS.modo === "COMPRA") {
+    document.getElementById("btnCobrar").innerText = "Guardar compra";
+    document.getElementById("tituloCarrito").innerText = "Detalle de compra";
+    document.getElementById("bloquePago").style.display = "none";
+	  document.getElementById("bloqueCompra").style.display = "block";
+
+    modo.innerText = "📦 COMPRA";
+    modo.style.background = "#2563eb";
+    modo.style.color = "white";
+
+    texto = "📦 Modo Compra activado";
+  }
+
+  if (POS.modo === "CONSIGNACION") {
+    document.getElementById("btnCobrar").innerText = "Guardar consignación";
+    document.getElementById("tituloCarrito").innerText = "Productos en consignación";
+    document.getElementById("bloquePago").style.display = "none";
+	  document.getElementById("bloqueCompra").style.display = "none";
+
+    modo.innerText = "🤝 CONSIGNACIÓN";
+    modo.style.background = "#ea580c";
+    modo.style.color = "white";
+
+    texto = "🤝 Modo Consignación activado";
+  }
+
+  mostrarMensaje(texto);
+  regresarVenta();
+}
+
+
+function regresarAdminDesdeProductos() {
+  document.getElementById("pantallaProductos").style.display = "none";
+  document.getElementById("pantallaAdmin").style.display = "block";
+}
+
+function regresarAdminDesdeReportes() {
+
+  document.getElementById("pantallaReportes").style.display = "none";
+
+  document.getElementById("pantallaAdmin").style.display = "block";
+
+}
+
+async function mostrarReportes() {
+
+  document.getElementById("pantallaLogin").style.display = "none";
+  document.getElementById("pantallaVenta").style.display = "none";
+  document.getElementById("pantallaAdmin").style.display = "none";
+  document.getElementById("pantallaProductos").style.display = "none";
+  document.getElementById("pantallaReportes").style.display = "block";
+
+  try {
+
+    const respuesta = await fetch(API_URL + "?action=dashboard");
+    const data = await respuesta.json();
+
+    if (!data.ok) {
+      alert("No fue posible cargar el dashboard.");
+      return;
+    }
+
+    document.getElementById("repVentaHoy").innerText =
+      "$" + Number(data.ventaHoy || 0).toFixed(2);
+
+	  document.getElementById("repCostoReinversion").innerText =
+  "$" + Number(data.costoReinversion || 0).toFixed(2);
+
+    document.getElementById("repUtilidad").innerText =
+      "$" + Number(data.utilidadHoy || 0).toFixed(2);
+
+    document.getElementById("repTickets").innerText =
+      Number(data.tickets || 0);
+
+    document.getElementById("repEfectivo").innerText =
+      "$" + Number(data.efectivo || 0).toFixed(2);
+
+    document.getElementById("repTarjeta").innerText =
+      "$" + Number(data.tarjeta || 0).toFixed(2);
+
+    document.getElementById("repTransferencia").innerText =
+      "$" + Number(data.transferencia || 0).toFixed(2);
+
+    document.getElementById("repActualizacion").innerText =
+      "Última actualización: " + (data.ultimaActualizacion || "--");
+
+  } catch (error) {
+
+    alert("Error al cargar dashboard: " + error.message);
+
+  }
+history.pushState(null, "", location.href);
+}
+async function cargarReporteDias(dias) {
+  const contenedor = document.getElementById("tablaReporteDias");
+
+  contenedor.innerHTML = `
+    <div class="item-carrito">
+      Cargando reporte...
+    </div>
+  `;
+
+  try {
+    const respuesta = await fetch(API_URL + "?action=reporteDias&dias=" + dias);
+    const data = await respuesta.json();
+
+    if (!data.ok) {
+      contenedor.innerHTML = `
+        <div class="item-carrito">
+          No fue posible cargar el reporte.
+        </div>
+      `;
+      return;
+    }
+
+    let html = `
+      <div class="item-carrito" style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:8px;">Fecha</th>
+              <th style="text-align:right; padding:8px;">Venta</th>
+              <th style="text-align:right; padding:8px;">Reinversión</th>
+              <th style="text-align:right; padding:8px;">Utilidad</th>
+              <th style="text-align:right; padding:8px;">Tickets</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+    data.reporte.forEach(d => {
+      html += `
+        <tr>
+          <td style="padding:8px; border-top:1px solid #eee;">${d.fecha}</td>
+          <td style="padding:8px; border-top:1px solid #eee; text-align:right;">$${Number(d.venta || 0).toFixed(2)}</td>
+          <td style="padding:8px; border-top:1px solid #eee; text-align:right;">$${Number(d.costoReinversion || 0).toFixed(2)}</td>
+          <td style="padding:8px; border-top:1px solid #eee; text-align:right;">$${Number(d.utilidad || 0).toFixed(2)}</td>
+          <td style="padding:8px; border-top:1px solid #eee; text-align:right;">${Number(d.tickets || 0)}</td>
+        </tr>
+      `;
+    });
+
+    html += `
+          </tbody>
+          <tfoot>
+            <tr>
+              <th style="padding:8px; border-top:2px solid #ccc; text-align:left;">TOTAL</th>
+              <th style="padding:8px; border-top:2px solid #ccc; text-align:right;">$${Number(data.totales.venta || 0).toFixed(2)}</th>
+              <th style="padding:8px; border-top:2px solid #ccc; text-align:right;">$${Number(data.totales.costoReinversion || 0).toFixed(2)}</th>
+              <th style="padding:8px; border-top:2px solid #ccc; text-align:right;">$${Number(data.totales.utilidad || 0).toFixed(2)}</th>
+              <th style="padding:8px; border-top:2px solid #ccc; text-align:right;">${Number(data.totales.tickets || 0)}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    `;
+
+    contenedor.innerHTML = html;
+
+  } catch (error) {
+    contenedor.innerHTML = `
+      <div class="item-carrito">
+        Error: ${error.message}
+      </div>
+    `;
+  }
+}
+// ==================================================
+// CLIENTES
+// ==================================================
+
+async function mostrarClientesAdmin() {
+  document.getElementById("pantallaAdmin").style.display = "none";
+  document.getElementById("pantallaClientes").style.display = "block";
+
+  await cargarClientes();
+
+  history.pushState(null, "", location.href);
+}
+
+
+async function cargarClientes() {
+  const contenedor =
+    document.getElementById("listaClientesAdmin");
+
+  contenedor.innerHTML = `
+    <div class="item-carrito">
+      Cargando clientes...
+    </div>
+  `;
+
+  try {
+    const respuesta = await fetch(
+      API_URL + "?action=clientes"
+    );
+
+    const data = await respuesta.json();
+
+    if (!data.ok) {
+      contenedor.innerHTML = `
+        <div class="item-carrito">
+          ${data.mensaje || "No fue posible cargar los clientes"}
+        </div>
+      `;
+      return;
+    }
+
+    POS.clientes = data.clientes || [];
+
+    renderClientesAdmin(POS.clientes);
+
+  } catch (error) {
+    contenedor.innerHTML = `
+      <div class="item-carrito">
+        Error de conexión: ${error.message}
+      </div>
+    `;
+  }
+}
+
+
+function renderClientesAdmin(lista) {
+  const contenedor =
+    document.getElementById("listaClientesAdmin");
+
+  contenedor.innerHTML = "";
+
+  if (!lista || lista.length === 0) {
+    contenedor.innerHTML = `
+      <div class="item-carrito">
+        No hay clientes registrados.
+      </div>
+    `;
+    return;
+  }
+
+  lista.forEach(cliente => {
+    const saldo = Number(cliente.saldo || 0);
+    const limite = Number(cliente.limiteCredito || 0);
+    const disponible = Math.max(0, limite - saldo);
+
+    const div = document.createElement("div");
+    div.className = "item-carrito";
+
+    div.innerHTML = `
+      <div class="item-linea">
+
+        <div style="min-width:0;">
+
+          <div class="item-nombre">
+            ${escaparHTML(cliente.nombre)}
+          </div>
+
+          <div class="item-info">
+            ID: ${escaparHTML(cliente.id)}<br>
+            Teléfono: ${escaparHTML(cliente.telefono || "Sin teléfono")}<br>
+            Crédito autorizado: $${limite.toFixed(2)}<br>
+            Saldo: $${saldo.toFixed(2)}<br>
+            Disponible: $${disponible.toFixed(2)}
+          </div>
+
+        </div>
+
+        <div class="item-importe">
+          ${cliente.activo === "SI" ? "🟢" : "🔴"}
+        </div>
+
+      </div>
+
+      <div class="item-botones">
+        <button
+          onclick="editarClienteAdmin('${escaparAtributo(cliente.id)}')"
+        >
+          ✏️ Editar
+        </button>
+      </div>
+    `;
+
+    contenedor.appendChild(div);
+  });
+}
+
+
+function filtrarClientesAdmin() {
+  const texto = document
+    .getElementById("buscadorClientes")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if (texto === "") {
+    renderClientesAdmin(POS.clientes);
+    return;
+  }
+
+  const filtrados = POS.clientes.filter(cliente =>
+    String(cliente.nombre || "")
+      .toLowerCase()
+      .includes(texto) ||
+
+    String(cliente.telefono || "")
+      .toLowerCase()
+      .includes(texto) ||
+
+    String(cliente.id || "")
+      .toLowerCase()
+      .includes(texto)
+  );
+
+  renderClientesAdmin(filtrados);
+}
+
+
+function mostrarFormularioCliente() {
+  document.getElementById("formCliente").style.display = "block";
+
+  document.getElementById("clienteModo").value = "NUEVO";
+  document.getElementById("clienteId").value = "";
+
+  document.getElementById("tituloFormularioCliente").innerText =
+    "Alta de cliente";
+
+  document.getElementById("clienteNombre").value = "";
+  document.getElementById("clienteTelefono").value = "";
+  document.getElementById("clienteDireccion").value = "";
+  document.getElementById("clienteLimiteCredito").value = "0";
+  document.getElementById("clienteActivo").value = "SI";
+
+  document.getElementById("bloqueClienteActivo").style.display =
+    "none";
+
+  document.getElementById("clienteNombre").focus();
+
+  document.getElementById("formCliente").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+
+function ocultarFormularioCliente() {
+  document.getElementById("formCliente").style.display = "none";
+}
+
+
+function editarClienteAdmin(idCliente) {
+  const cliente = POS.clientes.find(
+    c => String(c.id).trim() === String(idCliente).trim()
+  );
+
+  if (!cliente) {
+    alert("Cliente no encontrado");
+    return;
+  }
+
+  document.getElementById("formCliente").style.display = "block";
+
+  document.getElementById("clienteModo").value = "EDITAR";
+  document.getElementById("clienteId").value = cliente.id;
+
+  document.getElementById("tituloFormularioCliente").innerText =
+    "Editar cliente";
+
+  document.getElementById("clienteNombre").value =
+    cliente.nombre || "";
+
+  document.getElementById("clienteTelefono").value =
+    cliente.telefono || "";
+
+  document.getElementById("clienteDireccion").value =
+    cliente.direccion || "";
+
+  document.getElementById("clienteLimiteCredito").value =
+    Number(cliente.limiteCredito || 0);
+
+  document.getElementById("clienteActivo").value =
+    cliente.activo || "SI";
+
+  document.getElementById("bloqueClienteActivo").style.display =
+    "block";
+
+  document.getElementById("formCliente").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+
+async function guardarClienteAdmin() {
+  const modo =
+    document.getElementById("clienteModo").value;
+
+  const cliente = {
+    id: document.getElementById("clienteId").value.trim(),
+
+    nombre:
+      document.getElementById("clienteNombre").value.trim(),
+
+    telefono:
+      document.getElementById("clienteTelefono").value.trim(),
+
+    direccion:
+      document.getElementById("clienteDireccion").value.trim(),
+
+    limiteCredito: Number(
+      document.getElementById("clienteLimiteCredito").value || 0
+    ),
+
+    activo:
+      document.getElementById("clienteActivo").value
+  };
+
+  if (cliente.nombre === "") {
+    alert("Captura el nombre del cliente");
+    return;
+  }
+
+  if (cliente.limiteCredito < 0) {
+    alert("El límite de crédito no puede ser negativo");
+    return;
+  }
+
+  const accion =
+    modo === "EDITAR"
+      ? "actualizarCliente"
+      : "guardarCliente";
+
+  try {
+    const url =
+      API_URL +
+      "?action=" +
+      accion +
+      "&data=" +
+      encodeURIComponent(JSON.stringify(cliente));
+
+    const respuesta = await fetch(url);
+    const texto = await respuesta.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(texto);
+    } catch (error) {
+      alert(
+        "Apps Script no respondió JSON. Revisa la publicación de la API."
+      );
+      return;
+    }
+
+    if (!data.ok) {
+      alert(data.mensaje || "No fue posible guardar el cliente");
+      return;
+    }
+
+    alert("✅ " + data.mensaje);
+
+    ocultarFormularioCliente();
+
+    await cargarClientes();
+
+  } catch (error) {
+    alert("Error al guardar cliente: " + error.message);
+  }
+}
+
+
+function regresarAdminDesdeClientes() {
+  document.getElementById("pantallaClientes").style.display = "none";
+  document.getElementById("pantallaAdmin").style.display = "block";
+}
+
+
+function escaparHTML(valor) {
+  return String(valor || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+function escaparAtributo(valor) {
+  return String(valor || "")
+    .replaceAll("\\", "\\\\")
+    .replaceAll("'", "\\'");
+}	
+
+async function cargarClientesParaCredito() {
+
+  const selector =
+    document.getElementById(
+      "clienteCredito"
+    );
+
+  selector.innerHTML = `
+    <option value="">
+      Cargando clientes...
+    </option>
+  `;
+
+  try {
+
+    const respuesta =
+      await fetch(
+        API_URL +
+        "?action=clientes",
+        {
+          cache: "no-store"
+        }
+      );
+
+    if (!respuesta.ok) {
+      throw new Error(
+        "Respuesta HTTP " +
+        respuesta.status
+      );
+    }
+
+    const data =
+      await respuesta.json();
+
+    if (!data.ok) {
+      throw new Error(
+        data.mensaje ||
+        "No fue posible cargar clientes"
+      );
+    }
+
+    const clientesActivos =
+      (data.clientes || []).filter(
+        cliente =>
+          String(
+            cliente.activo || ""
+          ).toUpperCase() ===
+          "SI"
+      );
+
+    guardarClientesOffline(
+      clientesActivos
+    );
+
+    llenarSelectorClientesCredito(
+      clientesActivos
+    );
+
+  } catch (error) {
+
+    const clientesLocales =
+      obtenerClientesOffline();
+
+    if (
+      clientesLocales.length === 0
+    ) {
+
+      POS.clientes = [];
+
+      selector.innerHTML = `
+        <option value="">
+          Sin conexión y sin clientes guardados
+        </option>
+      `;
+
+      mostrarMensaje(
+        "❌ No hay catálogo local de clientes.",
+        "error"
+      );
+
+      return;
+    }
+
+    llenarSelectorClientesCredito(
+      clientesLocales
+    );
+
+    mostrarMensaje(
+      "📴 Clientes cargados desde el dispositivo."
+    );
+  }
+}
+function mostrarDatosClienteCredito() {
+
+  const idCliente =
+    document.getElementById(
+      "clienteCredito"
+    ).value;
+
+  const bloque =
+    document.getElementById(
+      "datosClienteCredito"
+    );
+
+  if (idCliente === "") {
+
+    bloque.style.display =
+      "none";
+
+    bloque.innerHTML =
+      "";
+
+    return;
+  }
+
+  const cliente =
+    POS.clientes.find(
+      cliente =>
+        String(cliente.id) ===
+        String(idCliente)
+    );
+
+  if (!cliente) {
+
+    bloque.style.display =
+      "none";
+
+    bloque.innerHTML =
+      "";
+
+    return;
+  }
+
+  const limite =
+    Number(
+      cliente.limiteCredito || 0
+    );
+
+  const saldo =
+    Number(
+      cliente.saldo || 0
+    );
+
+  const creditoPendiente =
+    obtenerCreditoPendienteCliente(
+      cliente.id
+    );
+
+  const disponible =
+    navigator.onLine
+      ? Math.max(
+          0,
+          limite - saldo
+        )
+      : calcularCreditoDisponibleOffline(
+          cliente
+        );
+
+  const totalVenta =
+    POS.carrito.reduce(
+      (suma, item) =>
+        suma +
+        Number(item.cantidad || 0) *
+        Number(item.precio || 0),
+      0
+    );
+
+  const permitido =
+    totalVenta <= disponible;
+
+  bloque.innerHTML = `
+    <strong>
+      ${escaparHTML(cliente.nombre)}
+    </strong>
+    <br>
+
+    Límite:
+    $${limite.toFixed(2)}
+    <br>
+
+    Saldo sincronizado:
+    $${saldo.toFixed(2)}
+    <br>
+
+    ${
+      navigator.onLine
+        ? ""
+        : `
+          Crédito pendiente offline:
+          $${creditoPendiente.toFixed(2)}
+          <br>
+
+          Tope offline:
+          $${LIMITE_CREDITO_OFFLINE.toFixed(2)}
+          <br>
+        `
+    }
+
+    Disponible:
+    $${disponible.toFixed(2)}
+    <br>
+
+    Nueva venta:
+    $${totalVenta.toFixed(2)}
+    <br>
+
+    <strong
+      style="
+        color:${
+          permitido
+            ? "#166534"
+            : "#b91c1c"
+        };
+      "
+    >
+      ${
+        permitido
+          ? navigator.onLine
+            ? "✅ Crédito disponible"
+            : "📴 Crédito offline disponible"
+          : "❌ Crédito insuficiente"
+      }
+    </strong>
+  `;
+
+  bloque.style.background =
+    permitido
+      ? "#f0fdf4"
+      : "#fef2f2";
+
+  bloque.style.display =
+    "block";
+}
+function establecerFechaLimiteCredito() {
+  const campo =
+    document.getElementById("fechaLimiteCredito");
+
+  if (campo.value !== "") return;
+
+  const fecha = new Date();
+
+  fecha.setDate(fecha.getDate() + 15);
+
+  const anio = fecha.getFullYear();
+
+  const mes = String(
+    fecha.getMonth() + 1
+  ).padStart(2, "0");
+
+  const dia = String(
+    fecha.getDate()
+  ).padStart(2, "0");
+
+  campo.value =
+    anio + "-" + mes + "-" + dia;
+}
+// ==================================================
+// CUENTAS POR COBRAR Y ABONOS
+// ==================================================
+
+async function mostrarCuentasPorCobrar() {
+  document.getElementById(
+    "pantallaAdmin"
+  ).style.display = "none";
+
+  document.getElementById(
+    "pantallaCuentasPorCobrar"
+  ).style.display = "block";
+
+  await cargarCuentasPorCobrar();
+
+  history.pushState(null, "", location.href);
+}
+
+
+async function cargarCuentasPorCobrar() {
+  const contenedor =
+    document.getElementById(
+      "listaCuentasPorCobrar"
+    );
+
+  contenedor.innerHTML = `
+    <div class="item-carrito">
+      Cargando cuentas...
+    </div>
+  `;
+
+  try {
+    const respuesta = await fetch(
+      API_URL + "?action=cuentasPorCobrar"
+    );
+
+    const data = await respuesta.json();
+
+    if (!data.ok) {
+      contenedor.innerHTML = `
+        <div class="item-carrito">
+          ${
+            data.mensaje ||
+            "No fue posible cargar las cuentas"
+          }
+        </div>
+      `;
+      return;
+    }
+
+    POS.cuentasPorCobrar =
+      data.cuentas || [];
+
+    const resumen =
+      data.resumen || {};
+
+    document.getElementById(
+      "cxpSaldoTotal"
+    ).innerText =
+      "$" +
+      Number(
+        resumen.saldoTotal || 0
+      ).toFixed(2);
+
+    document.getElementById(
+      "cxpPendientes"
+    ).innerText =
+      Number(
+        resumen.cuentasPendientes || 0
+      );
+
+    document.getElementById(
+      "cxpVencidas"
+    ).innerText =
+      Number(
+        resumen.cuentasVencidas || 0
+      );
+
+    filtrarCuentasPorCobrar();
+
+  } catch (error) {
+    contenedor.innerHTML = `
+      <div class="item-carrito">
+        Error de conexión:
+        ${escaparHTML(error.message)}
+      </div>
+    `;
+  }
+}
+
+
+function filtrarCuentasPorCobrar() {
+  const texto = document
+    .getElementById("buscadorCuentas")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const filtro = document
+    .getElementById("filtroEstadoCuentas")
+    .value;
+
+  let cuentas =
+    [...POS.cuentasPorCobrar];
+
+  if (filtro === "PENDIENTES") {
+    cuentas = cuentas.filter(
+      cuenta => Number(cuenta.saldo || 0) > 0
+    );
+  }
+
+  if (filtro === "LIQUIDADO") {
+    cuentas = cuentas.filter(
+      cuenta => cuenta.estado === "LIQUIDADO"
+    );
+  }
+
+  if (filtro === "VENCIDO") {
+    cuentas = cuentas.filter(
+      cuenta => cuenta.vencida === true
+    );
+  }
+
+  if (texto !== "") {
+    cuentas = cuentas.filter(cuenta =>
+      String(cuenta.cliente || "")
+        .toLowerCase()
+        .includes(texto) ||
+
+      String(cuenta.folioVenta || "")
+        .toLowerCase()
+        .includes(texto) ||
+
+      String(cuenta.idCuenta || "")
+        .toLowerCase()
+        .includes(texto)
+    );
+  }
+
+  renderCuentasPorCobrar(cuentas);
+}
+
+
+function renderCuentasPorCobrar(cuentas) {
+  const contenedor =
+    document.getElementById(
+      "listaCuentasPorCobrar"
+    );
+
+  contenedor.innerHTML = "";
+
+  if (!cuentas || cuentas.length === 0) {
+    contenedor.innerHTML = `
+      <div class="item-carrito">
+        No hay cuentas para mostrar.
+      </div>
+    `;
+    return;
+  }
+
+  cuentas.forEach(cuenta => {
+    const saldo =
+      Number(cuenta.saldo || 0);
+
+    const importeOriginal =
+      Number(cuenta.importeOriginal || 0);
+
+    let icono = "🟡";
+    let colorEstado = "#d97706";
+
+    if (cuenta.estado === "LIQUIDADO") {
+      icono = "🟢";
+      colorEstado = "#15803d";
+    } else if (cuenta.vencida) {
+      icono = "🔴";
+      colorEstado = "#dc2626";
+    }
+
+    const fechaLimite =
+      formatearFechaCorta(
+        cuenta.fechaLimite
+      );
+
+    const div =
+      document.createElement("div");
+
+    div.className = "item-carrito";
+
+    div.innerHTML = `
+      <div class="item-linea">
+
+        <div style="min-width:0;">
+
+          <div class="item-nombre">
+            ${escaparHTML(cuenta.cliente)}
+          </div>
+
+          <div class="item-info">
+            Venta:
+            ${escaparHTML(cuenta.folioVenta)}
+            <br>
+
+            Importe original:
+            $${importeOriginal.toFixed(2)}
+            <br>
+
+            Fecha límite:
+            ${escaparHTML(fechaLimite || "Sin fecha")}
+            <br>
+
+            Cuenta:
+            ${escaparHTML(cuenta.idCuenta)}
+          </div>
+
+        </div>
+
+        <div
+          style="
+            font-weight:bold;
+            color:${colorEstado};
+            text-align:right;
+          "
+        >
+          ${icono}
+          ${escaparHTML(cuenta.estado)}
+          <br>
+
+          <span style="font-size:20px;">
+            $${saldo.toFixed(2)}
+          </span>
+        </div>
+
+      </div>
+
+      ${
+        saldo > 0
+          ? `
+            <button
+              onclick="abrirModalAbono(
+                '${escaparAtributo(cuenta.idCuenta)}'
+              )"
+            >
+              💵 Registrar abono
+            </button>
+          `
+          : `
+            <div
+              style="
+                margin-top:10px;
+                padding:8px;
+                background:#dcfce7;
+                color:#166534;
+                border-radius:8px;
+                font-weight:bold;
+                text-align:center;
+              "
+            >
+              Cuenta liquidada
+            </div>
+          `
+      }
+    `;
+
+    contenedor.appendChild(div);
+  });
+}
+
+
+function abrirModalAbono(idCuenta) {
+  const cuenta =
+    POS.cuentasPorCobrar.find(
+      c =>
+        String(c.idCuenta) ===
+        String(idCuenta)
+    );
+
+  if (!cuenta) {
+    alert("Cuenta no encontrada");
+    return;
+  }
+
+  const saldo =
+    Number(cuenta.saldo || 0);
+
+  if (saldo <= 0) {
+    alert("La cuenta ya está liquidada");
+    return;
+  }
+
+  document.getElementById(
+    "abonoIdCuenta"
+  ).value = cuenta.idCuenta;
+
+  document.getElementById(
+    "abonoImporte"
+  ).value = "";
+
+  document.getElementById(
+    "abonoImporte"
+  ).max = saldo;
+
+  document.getElementById(
+    "abonoMetodoPago"
+  ).value = "EFECTIVO";
+
+  document.getElementById(
+    "abonoObservaciones"
+  ).value = "";
+
+  document.getElementById(
+    "abonoDatosCuenta"
+  ).innerHTML = `
+    <strong>
+      ${escaparHTML(cuenta.cliente)}
+    </strong>
+    <br>
+
+    Venta:
+    ${escaparHTML(cuenta.folioVenta)}
+    <br>
+
+    Saldo pendiente:
+    <strong>$${saldo.toFixed(2)}</strong>
+  `;
+
+  document.getElementById(
+    "modalAbono"
+  ).style.display = "block";
+
+  document.getElementById(
+    "abonoImporte"
+  ).focus();
+}
+
+
+function cerrarModalAbono() {
+  document.getElementById(
+    "modalAbono"
+  ).style.display = "none";
+}
+
+
+async function guardarAbonoFrontend() {
+  const boton =
+    document.getElementById(
+      "btnGuardarAbono"
+    );
+
+  if (boton.disabled) return;
+
+  const idCuenta =
+    document.getElementById(
+      "abonoIdCuenta"
+    ).value;
+
+  const importe =
+    Number(
+      document.getElementById(
+        "abonoImporte"
+      ).value || 0
+    );
+
+  const metodoPago =
+    document.getElementById(
+      "abonoMetodoPago"
+    ).value;
+
+  const observaciones =
+    document.getElementById(
+      "abonoObservaciones"
+    ).value.trim();
+
+  const cuenta =
+    POS.cuentasPorCobrar.find(
+      c =>
+        String(c.idCuenta) ===
+        String(idCuenta)
+    );
+
+  if (!cuenta) {
+    alert("Cuenta no encontrada");
+    return;
+  }
+
+  const saldo =
+    Number(cuenta.saldo || 0);
+
+  if (importe <= 0) {
+    alert(
+      "Captura un importe mayor que cero"
+    );
+    return;
+  }
+
+  if (importe > saldo) {
+    alert(
+      "El abono no puede superar el saldo de $" +
+      saldo.toFixed(2)
+    );
+    return;
+  }
+
+  const abono = {
+    idCuenta: idCuenta,
+    importe: importe,
+    metodoPago: metodoPago,
+    usuario: POS.usuario,
+    observaciones: observaciones
+  };
+
+  boton.disabled = true;
+  boton.innerText = "Guardando...";
+
+  try {
+    const url =
+      API_URL +
+      "?action=guardarAbono&data=" +
+      encodeURIComponent(
+        JSON.stringify(abono)
+      );
+
+    const respuesta =
+      await fetch(url);
+
+    const texto =
+      await respuesta.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(texto);
+    } catch (error) {
+      alert(
+        "Apps Script no respondió JSON. " +
+        "Revisa si el abono se guardó antes de intentarlo otra vez."
+      );
+      return;
+    }
+
+    if (!data.ok) {
+      alert(
+        data.mensaje ||
+        "No fue posible registrar el abono"
+      );
+      return;
+    }
+
+    alert("✅ " + data.mensaje);
+
+    cerrarModalAbono();
+
+    await cargarCuentasPorCobrar();
+
+    // Refresca clientes para mostrar su nuevo saldo.
+    try {
+      const respuestaClientes =
+        await fetch(
+          API_URL + "?action=clientes"
+        );
+
+      const dataClientes =
+        await respuestaClientes.json();
+
+      if (dataClientes.ok) {
+        POS.clientes =
+          dataClientes.clientes || [];
+      }
+    } catch (error) {
+      console.warn(
+        "No fue posible actualizar clientes",
+        error
+      );
+    }
+
+  } catch (error) {
+    alert(
+      "Error de conexión: " +
+      error.message
+    );
+
+  } finally {
+    boton.disabled = false;
+    boton.innerText = "Guardar abono";
+  }
+}
+
+
+function regresarAdminDesdeCuentas() {
+  document.getElementById(
+    "pantallaCuentasPorCobrar"
+  ).style.display = "none";
+
+  document.getElementById(
+    "pantallaAdmin"
+  ).style.display = "block";
+}
+
+
+function formatearFechaCorta(valor) {
+  if (!valor) return "";
+
+  const fecha = new Date(valor);
+
+  if (isNaN(fecha.getTime())) {
+    return String(valor);
+  }
+
+  return fecha.toLocaleDateString(
+    "es-MX",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }
+  );
+}
+
+// ==================================================
+// UTILIDADES
+// ==================================================
+	
+function esAdmin() {
+  return POS.rol === "ADMIN";
+}
+	function mostrarMensaje(texto, tipo = "ok") {
+
+  const div = document.getElementById("mensajePOS");
+
+  div.innerText = texto;
+
+  if (tipo === "ok") {
+    div.style.background = "#d1fae5";
+    div.style.color = "#065f46";
+  } else {
+    div.style.background = "#fee2e2";
+    div.style.color = "#991b1b";
+  }
+
+  div.style.display = "block";
+
+  setTimeout(() => {
+    div.style.display = "none";
+  }, 5000);
+
+}
+function esUnidadGranel(unidad) {
+  unidad = String(unidad || "PZ").toUpperCase();
+
+  return (
+    unidad === "KG" ||
+    unidad === "GR" ||
+    unidad === "L" ||
+    unidad === "ML"
+  );
+}
+let productoGranel = null;
+let modoGranel = "CANTIDAD";
+function cambiarModoGranel(modo) {
+
+  modoGranel = modo;
+
+  const inputCantidad = document.getElementById("cantidadGranel");
+  const inputImporte = document.getElementById("importeGranel");
+
+  const btnCantidad = document.getElementById("btnModoCantidad");
+  const btnImporte = document.getElementById("btnModoImporte");
+
+  if (modo === "CANTIDAD") {
+    inputCantidad.disabled = false;
+    inputImporte.disabled = true;
+
+    btnCantidad.style.background = "#0b8043";
+    btnImporte.style.background = "#6b7280";
+
+    inputCantidad.focus();
+  }
+
+  if (modo === "IMPORTE") {
+    inputCantidad.disabled = true;
+    inputImporte.disabled = false;
+
+    btnCantidad.style.background = "#6b7280";
+    btnImporte.style.background = "#0b8043";
+
+    inputImporte.focus();
+  }
+}
+function abrirModalGranel(producto) {
+
+  productoGranel = producto;
+
+  document.getElementById("tituloGranel").innerText =
+    producto.producto;
+
+  document.getElementById("precioGranel").innerText =
+    "$" +
+    Number(producto.precio).toFixed(2) +
+    " / " +
+    producto.unidad;
+
+  document.getElementById("cantidadGranel").value = "";
+  document.getElementById("importeGranel").value = "";
+
+ document.getElementById("modalGranel").style.display = "flex";
+
+cambiarModoGranel("IMPORTE");
+
+}
+
+function cerrarModalGranel() {
+
+  productoGranel = null;
+
+  document.getElementById("modalGranel").style.display = "none";
+
+}
+function calcularImporteGranel() {
+
+  if (!productoGranel) return;
+
+  const cantidad = Number(
+    document.getElementById("cantidadGranel").value || 0
+  );
+
+  const importe = cantidad * Number(productoGranel.precio);
+
+  document.getElementById("importeGranel").value =
+    importe.toFixed(2);
+
+}
+
+function calcularCantidadGranel() {
+
+  if (!productoGranel) return;
+
+  const importe = Number(
+    document.getElementById("importeGranel").value || 0
+  );
+
+  const cantidad =
+    importe / Number(productoGranel.precio);
+
+  document.getElementById("cantidadGranel").value =
+    cantidad.toFixed(3);
+
+}
+function aceptarGranel() {
+
+  const cantidad = Number(
+    document.getElementById("cantidadGranel").value || 0
+  );
+
+  if (cantidad <= 0) {
+    alert("Captura una cantidad válida.");
+    return;
+  }
+
+  const index = POS.carrito.findIndex(
+    i => i.codigo === productoGranel.codigo
+  );
+
+  if (index >= 0) {
+
+    POS.carrito[index].cantidad += cantidad;
+
+    POS.carrito.splice(index, 1);
+    POS.carrito.unshift(POS.carrito[index]);
+
+  } else {
+
+    POS.carrito.unshift({
+
+      codigo: productoGranel.codigo,
+      producto: productoGranel.producto,
+      precio: productoGranel.precio,
+      costo: productoGranel.costo || 0,
+
+      cantidad: cantidad,
+
+      unidad: productoGranel.unidad,
+      consignacion: productoGranel.consignacion
+
+    });
+
+  }
+
+  cerrarModalGranel();
+
+  renderCarrito();
+
+  mostrarMensaje(
+    "✅ " +
+    productoGranel.producto +
+    " agregado."
+  );
+
+}
+function pantallaVisibleActual() {
+  if (document.getElementById("pantallaReportes").style.display === "block") {
+    return "REPORTES";
+  }
+
+  if (document.getElementById("pantallaProductos").style.display === "block") {
+    return "PRODUCTOS";
+  }
+
+  if (document.getElementById("pantallaAdmin").style.display === "block") {
+    return "ADMIN";
+  }
+
+  if (document.getElementById("pantallaVenta").style.display === "block") {
+    return "VENTA";
+  }
+
+  return "LOGIN";
+}
+
+function manejarAtrasApp() {
+  const pantalla = pantallaVisibleActual();
+
+  if (pantalla === "REPORTES") {
+    document.getElementById("pantallaReportes").style.display = "none";
+    document.getElementById("pantallaAdmin").style.display = "block";
+    history.pushState(null, "", location.href);
+    return;
+  }
+
+  if (pantalla === "PRODUCTOS") {
+    document.getElementById("pantallaProductos").style.display = "none";
+    document.getElementById("pantallaAdmin").style.display = "block";
+    history.pushState(null, "", location.href);
+    return;
+  }
+
+  if (pantalla === "ADMIN") {
+    document.getElementById("pantallaAdmin").style.display = "none";
+    document.getElementById("pantallaVenta").style.display = "block";
+    history.pushState(null, "", location.href);
+    return;
+  }
+
+  if (pantalla === "VENTA") {
+    history.pushState(null, "", location.href);
+    mostrarMensaje("Presiona 🚪 Salir para cerrar sesión.", "error");
+    return;
+  }
+}
+
+window.addEventListener("popstate", manejarAtrasApp);
+
+history.pushState(null, "", location.href);
+	
+window.addEventListener("load", cargarSesion);
+window.addEventListener(
+  "load",
+  () => {
+
+    actualizarEstadoConexion();
+
+    setTimeout(() => {
+
+      if (navigator.onLine) {
+        sincronizarVentasPendientes();
+      }
+
+    }, 1500);
+  }
+);
+	window.addEventListener(
+  "load",
+  actualizarEstadoConexion
+);
+
+</script>
+<div
+  id="modalGranel"
+  style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+  "
+>
+
+  <div
+    style="
+      width:92%;
+      max-width:420px;
+      background:white;
+      border-radius:18px;
+      padding:20px;
+      box-sizing:border-box;
+    "
+  >
+
+    <h2
+      id="tituloGranel"
+      style="margin-top:0; text-align:center;"
+    >
+      Venta a granel
+    </h2>
+
+    <div
+      id="precioGranel"
+      style="
+        text-align:center;
+        font-size:22px;
+        color:#0b8043;
+        font-weight:bold;
+        margin-bottom:20px;
+      "
+    >
+      Precio
+    </div>
+<div style="display:flex; gap:8px; margin-bottom:16px;">
+
+  <button
+    id="btnModoCantidad"
+    class="btn-cargar"
+    style="margin:0;"
+    onclick="cambiarModoGranel('CANTIDAD')"
+  >
+    Cantidad
+  </button>
+
+  <button
+    id="btnModoImporte"
+    class="btn-cargar"
+    style="margin:0; background:#6b7280;"
+    onclick="cambiarModoGranel('IMPORTE')"
+  >
+    Importe
+  </button>
+
+</div>
+    <label>Cantidad</label>
+
+    <input
+      id="cantidadGranel"
+      type="number"
+      step="0.001"
+		oninput="calcularImporteGranel()"
+      style="
+        width:100%;
+        padding:14px;
+        font-size:22px;
+        margin-bottom:16px;
+      "
+    >
+
+    <label>Importe</label>
+
+    <input
+      id="importeGranel"
+      type="number"
+      step="0.01"
+		oninput="calcularCantidadGranel()"
+      style="
+        width:100%;
+        padding:14px;
+        font-size:22px;
+        margin-bottom:20px;
+      "
+    >
+
+    <button
+      class="btn-cargar"
+      onclick="aceptarGranel()"
+    >
+      Aceptar
+    </button>
+
+    <button
+      class="btn-eliminar"
+      style="width:100%;"
+      onclick="cerrarModalGranel()"
+    >
+      Cancelar
+    </button>
+
+  </div>
+
+</div>
+<div
+  id="modalAbono"
+  style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:9999;
+    padding:16px;
+    overflow:auto;
+  "
+>
+
+  <div
+    style="
+      max-width:480px;
+      margin:40px auto;
+      background:white;
+      padding:18px;
+      border-radius:16px;
+    "
+  >
+
+    <h2>Registrar abono</h2>
+
+    <input
+      id="abonoIdCuenta"
+      type="hidden"
+    >
+
+    <div
+      id="abonoDatosCuenta"
+      style="
+        background:#f3f4f6;
+        padding:12px;
+        border-radius:10px;
+        margin-bottom:14px;
+        line-height:1.7;
+      "
+    ></div>
+
+    <label>Importe del abono</label>
+
+    <input
+      id="abonoImporte"
+      type="number"
+      min="0.01"
+      step="0.01"
+      placeholder="0.00"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:14px;
+        font-size:18px;
+        margin:6px 0 12px;
+      "
+    >
+
+    <label>Método de pago</label>
+
+    <select
+      id="abonoMetodoPago"
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:14px;
+        font-size:17px;
+        margin:6px 0 12px;
+      "
+    >
+      <option value="EFECTIVO">Efectivo</option>
+      <option value="TARJETA">Tarjeta</option>
+      <option value="TRANSFERENCIA">
+        Transferencia
+      </option>
+    </select>
+
+    <label>Observaciones</label>
+
+    <textarea
+      id="abonoObservaciones"
+      placeholder="Ej. Pago parcial..."
+      style="
+        width:100%;
+        box-sizing:border-box;
+        padding:14px;
+        font-size:16px;
+        min-height:80px;
+        margin:6px 0 12px;
+      "
+    ></textarea>
+
+    <button
+      id="btnGuardarAbono"
+      class="btn-cargar"
+      onclick="guardarAbonoFrontend()"
+    >
+      Guardar abono
+    </button>
+
+    <button
+      class="btn-eliminar"
+      style="width:100%;"
+      onclick="cerrarModalAbono()"
+    >
+      Cancelar
+    </button>
+
+  </div>
+
+</div>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", async () => {
+      try {
+        const registro = await navigator.serviceWorker.register("./sw.js");
+
+        console.log(
+          "Service Worker registrado:",
+          registro.scope
+        );
+      } catch (error) {
+        console.error(
+          "No fue posible registrar el Service Worker:",
+          error
+        );
+      }
+    });
+  }
+</script>
+</body>
+</html>
